@@ -2,7 +2,7 @@ package com.simarro.joshu.clientsqr.Pojo;
 
 public class Client {
 
-    private int id;
+    private int id, punts;
     private String nombre, mote, telefono;
 
     public Client(){
@@ -13,6 +13,7 @@ public class Client {
         this.nombre = nombre;
         this.mote = mote;
         this.telefono = telefono;
+        this.punts = 0;
     }
 
     public int getId() {
@@ -45,5 +46,13 @@ public class Client {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public int getPunts() {
+        return punts;
+    }
+
+    public void setPunts(int punts) {
+        this.punts = punts;
     }
 }

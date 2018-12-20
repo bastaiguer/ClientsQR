@@ -19,6 +19,16 @@ public class LlistaClients extends ArrayList<Client> {
         return c;
     }
 
+    public ArrayList<Client> getClientsOver(int over){
+        ArrayList<Client> c = new ArrayList<>();
+        for(Client cl: this){
+            if(cl.getPunts() >= over){
+                c.add(cl);
+            }
+        }
+        return c;
+    }
+
     public ArrayList<Client> getClientsByName(String name){
         ArrayList<Client> c = new ArrayList<>();
         for (Client cl : this) {
