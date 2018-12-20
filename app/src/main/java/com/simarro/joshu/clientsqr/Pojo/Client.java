@@ -1,17 +1,17 @@
 package com.simarro.joshu.clientsqr.Pojo;
 
 public class Client {
+
     private int id;
-    private String nombre, apellidos, telefono;
+    private String nombre, mote, telefono;
 
     public Client(){
 
     }
 
-    public Client(int id, String nombre, String apellidos, String telefono) {
-        this.id = id;
+    public Client(String nombre, String mote, String telefono) {
         this.nombre = nombre;
-        this.apellidos = apellidos;
+        this.mote = mote;
         this.telefono = telefono;
     }
 
@@ -31,12 +31,12 @@ public class Client {
         this.nombre = nombre;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getMote() {
+        return mote;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setMote(String mote) {
+        this.mote = mote;
     }
 
     public String getTelefono() {

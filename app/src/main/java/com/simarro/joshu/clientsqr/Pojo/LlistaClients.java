@@ -4,10 +4,35 @@ import java.util.ArrayList;
 
 public class LlistaClients extends ArrayList<Client> {
 
-    public Client getClient(int id) {
+    public void addClient(Client cl){
+        cl.setId(this.size()+1);
+        this.add(cl);
+    }
+
+    public Client getClientById(int id) {
         Client c = null;
         for (Client cl : this) {
             if (cl.getId() == id) {
+                c = cl;
+            }
+        }
+        return c;
+    }
+
+    public ArrayList<Client> getClientsByName(String name){
+        ArrayList<Client> c = new ArrayList<>();
+        for (Client cl : this) {
+            if (cl.getNombre().equals(name)) {
+                c.add(cl);
+            }
+        }
+        return c;
+    }
+
+    public Client getClientByTlf(String tlf){
+        Client c = null;
+        for (Client cl : this) {
+            if (cl.getTelefono().equals(tlf)) {
                 c = cl;
             }
         }
@@ -28,4 +53,5 @@ public class LlistaClients extends ArrayList<Client> {
             }
         }
     }
+
 }
