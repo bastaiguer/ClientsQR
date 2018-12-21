@@ -74,7 +74,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline10"
         app:layout_constraintStart_toStartOf="@+id/guideline11"
         app:layout_constraintTop_toTopOf="@+id/guideline12"
-        app:srcCompat="@drawable/qr" />
+        app:srcCompat="@drawable/selector_intro" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline7"

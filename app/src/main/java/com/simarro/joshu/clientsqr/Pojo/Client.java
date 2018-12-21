@@ -1,6 +1,8 @@
 package com.simarro.joshu.clientsqr.Pojo;
 
-public class Client {
+import java.io.Serializable;
+
+public class Client implements Serializable {
 
     private int id, punts;
     private String nombre, mote, telefono;

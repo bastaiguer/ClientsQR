@@ -1,5 +1,6 @@
 package com.simarro.joshu.clientsqr.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-
+        Intent intent = new Intent(this,DashBoard.class);
+        intent.putExtra("clients",clients);
+        startActivity(intent);
     }
 }

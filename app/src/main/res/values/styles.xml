@@ -8,4 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Estilo_app" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/fons</item>
+        <item name="colorPrimaryDark">@color/separador</item>
+        <item name="colorAccent">@color/altre</item>
+    </style>
+
 </resources>

@@ -1,12 +1,19 @@
 package com.simarro.joshu.clientsqr.Pojo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class LlistaClients extends ArrayList<Client> {
+public class LlistaClients extends ArrayList<Client> implements Serializable {
 
     public void addClient(Client cl){
         cl.setId(this.size()+1);
         this.add(cl);
+    }
+
+    public void addLlista(ArrayList<Client> llista){
+        for(Client cl : llista){
+            this.add(cl);
+        }
     }
 
     public Client getClientById(int id) {
