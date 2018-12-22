@@ -1,4 +1,5 @@
 package com.simarro.joshu.clientsqr.BBDD;
+
 import android.content.Context;
 import android.view.View;
 import android.widget.Toast;
@@ -7,6 +8,7 @@ import com.simarro.joshu.clientsqr.Activities.MainActivity;
 import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.mysql.jdbc.*;
 import com.mysql.jdbc.Driver;
+
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,23 +17,23 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class BD implements Runnable{
+public class BD implements Runnable {
 
     private String user, password, ip;
     private Connection conexionMySQL;
     private ArrayList<Client> clientes;
+    private boolean conectado = false;
+    private Context context;
 
-    public BD(){
+    public BD() {
 
     }
 
-    public BD(String u, String pass, String i){
-        this.user = u;
-        this.password = pass;
-        this.ip = i;
+    public BD(Context con) {
+        this.context = con;
     }
 
-    public ArrayList<Client> obClients(){
+    public ArrayList<Client> obClients() {
         return this.clientes;
     }
 
@@ -43,15 +45,14 @@ public class BD implements Runnable{
         this.conexionMySQL = conexionMySQL;
     }
 
-    public void conectarBDMySQL(Context c){
+    public void conectarBDMySQL() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String urlOdbc="jdbc:mysql://192.168.0.17:3306/clientsqr";
-            System.out.println(urlOdbc);
-            conexionMySQL=(DriverManager.getConnection(urlOdbc,"picanya","picanya"));
-            if(!conexionMySQL.isClosed()){
-                //Toast.makeText(c,"Conexión establecida",Toast.LENGTH_SHORT).show();
+            String urlOdbc = "jdbc:mysql://192.168.0.17:3306/clientsqr";
+            conexionMySQL = (DriverManager.getConnection(urlOdbc, "picanya", "picanya"));
+            if (!conexionMySQL.isClosed()) {
                 System.out.println("Conexión establecida");
+                conectado = true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -60,7 +61,7 @@ public class BD implements Runnable{
         }
     }
 
-    public void cerrarConexion(){
+    public void cerrarConexion() {
         try {
             this.conexionMySQL.close();
         } catch (SQLException e) {
@@ -68,7 +69,7 @@ public class BD implements Runnable{
         }
     }
 
-    public void getClientes(){
+    public void getClientes() {
         this.clientes = new ArrayList<>();
         java.sql.PreparedStatement stmt = null;
         Client client;
@@ -76,7 +77,7 @@ public class BD implements Runnable{
         try {
             stmt = this.conexionMySQL.prepareStatement("SELECT * FROM clients");
             rs = stmt.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 client = new Client();
                 client.setId(rs.getInt("id"));
                 client.setNombre(rs.getString("nombre"));
@@ -87,7 +88,7 @@ public class BD implements Runnable{
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -104,8 +105,6 @@ public class BD implements Runnable{
 
     @Override
     public void run() {
-        conectarBDMySQL(null);
-        getClientes();
-        cerrarConexion();
+
     }
 }

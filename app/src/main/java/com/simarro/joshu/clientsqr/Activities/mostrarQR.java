@@ -3,23 +3,22 @@ package com.simarro.joshu.clientsqr.Activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.Toast;
 
-import com.simarro.joshu.clientsqr.BBDD.BD;
-import com.simarro.joshu.clientsqr.Pojo.LlistaClients;
 import com.simarro.joshu.clientsqr.R;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class mostrarQR extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_mostrar_qr);
+        Toast.makeText(getApplicationContext(),getIntent().getExtras().getString("qr"),Toast.LENGTH_LONG).show();
     }
 
-
     @Override
-    public void onClick(View v) {
+    protected void onDestroy() {
+        super.onDestroy();
         Intent intent = new Intent(this,DashBoard.class);
         startActivity(intent);
     }
