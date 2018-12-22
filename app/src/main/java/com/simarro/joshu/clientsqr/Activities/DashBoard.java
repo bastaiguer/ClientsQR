@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class DashBoard extends AppCompatActivity {
 
-    private LlistaClients clients;
+    private LlistaClients clients = new LlistaClients();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
