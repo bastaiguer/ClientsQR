@@ -16,6 +16,14 @@ public class LlistaClients extends ArrayList<Client> implements Serializable {
         }
     }
 
+    public void mostrarNoms(){
+        for(Client cl:this){
+            System.out.println("------------------------------");
+            System.out.println(cl.getNombre());
+            System.out.println("------------------------------");
+        }
+    }
+
     public Client getClientById(int id) {
         Client c = null;
         for (Client cl : this) {
