@@ -24,6 +24,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/selector_menu"
+            android:onClick="onClick"
             app:srcCompat="@drawable/group" />
 
         <ImageButton
@@ -32,7 +33,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/selector_menu" />
+            android:background="@drawable/selector_menu"
+            android:onClick="onClick" />
     </LinearLayout>
 
     <LinearLayout
@@ -50,6 +52,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/selector_menu"
+            android:onClick="onClick"
             app:srcCompat="@drawable/qr" />
     </LinearLayout>
 </LinearLayout>

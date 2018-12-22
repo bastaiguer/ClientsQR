@@ -20,7 +20,6 @@ public class DashBoard extends AppCompatActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
         clients.addLlista((ArrayList<Client>) getIntent().getExtras().getSerializable("clients"));
-        this.clients.mostrarNoms();
     }
 
     @Override
@@ -31,7 +30,8 @@ public class DashBoard extends AppCompatActivity implements View.OnClickListener
                 intent = new Intent();
                 break;
             case R.id.btn_clientes:
-                intent = new Intent();
+                intent = new Intent(this,lista_clientes.class);
+                intent.putExtra("clients",clients.getClients());
                 break;
             case R.id.btn_leer_qr:
                 intent = new Intent();

@@ -17,12 +17,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-    }
-
-
-    @Override
-    public void onClick(View v) {
         //Accedemos a la BBDD mediante un Thread
         BD bd = new BD("picanya","picanya","jdbc:mysql://localhost:3306/clientsqr");
         Thread thread = new Thread(bd);
@@ -33,6 +27,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
         this.clients.addLlista(bd.obClients());
+    }
+
+
+    @Override
+    public void onClick(View v) {
         Intent intent = new Intent(this,DashBoard.class);
         intent.putExtra("clients",clients);
         startActivity(intent);

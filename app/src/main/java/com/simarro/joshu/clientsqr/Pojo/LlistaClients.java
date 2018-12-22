@@ -24,6 +24,10 @@ public class LlistaClients extends ArrayList<Client> implements Serializable {
         }
     }
 
+    public ArrayList<Client> getClients(){
+        return this;
+    }
+
     public Client getClientById(int id) {
         Client c = null;
         for (Client cl : this) {
