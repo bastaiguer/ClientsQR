@@ -23,6 +23,7 @@ public class BD implements Runnable {
     private Connection conexionMySQL;
     private ArrayList<Client> clientes;
     private boolean conectado = false;
+    private int mostrarpunts, addPunts;
     private Context context;
 
     public BD() {
@@ -31,6 +32,14 @@ public class BD implements Runnable {
 
     public BD(Context con) {
         this.context = con;
+    }
+
+    public int getMostrarpunts(){
+        return this.mostrarpunts;
+    }
+
+    public int getAddPunts(){
+        return addPunts;
     }
 
     public ArrayList<Client> obClients() {
@@ -66,6 +75,26 @@ public class BD implements Runnable {
             this.conexionMySQL.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void modPuntos(int x, int id) {
+        java.sql.PreparedStatement stmt = null;
+        try {
+            stmt = conexionMySQL.prepareCall("UPDATE clients SET punts=? WHERE id=?");
+            stmt.setInt(1, x);
+            stmt.setInt(2, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Error al cerrar la conexión...");
+            }
         }
     }
 
