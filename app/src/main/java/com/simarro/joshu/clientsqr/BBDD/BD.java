@@ -98,6 +98,28 @@ public class BD implements Runnable {
         }
     }
 
+    public void addCliente(int id, String nom, String mote, String tlf){
+        java.sql.PreparedStatement stmt = null;
+        try {
+            stmt = conexionMySQL.prepareCall("INSERT INTO clients (id, nombre, mote, telefono, punts) VALUES (?,?,?,?,0)");
+            stmt.setInt(1, id);
+            stmt.setString(2,nom);
+            stmt.setString(3,mote);
+            stmt.setString(4,tlf);
+            stmt.executeUpdate();
+        }catch (SQLException e){
+            System.out.println(e);
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Error al cerrar la conexión...");
+            }
+        }
+    }
+
     public void getClientes() {
         this.clientes = new ArrayList<>();
         java.sql.PreparedStatement stmt = null;

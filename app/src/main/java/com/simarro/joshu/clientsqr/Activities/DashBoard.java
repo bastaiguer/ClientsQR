@@ -15,38 +15,10 @@ import java.util.ArrayList;
 
 public class DashBoard extends AppCompatActivity implements View.OnClickListener {
 
-    private LlistaClients clients = new LlistaClients();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
-        //Accedemos a la BBDD mediante un Thread
-        BD bd = new BD(getApplicationContext()){
-            public void run() {
-                try {
-                    synchronized (this) {
-                        wait(500);
-                        conectarBDMySQL();
-                        getClientes();
-                        cerrarConexion();
-                    }
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    Log.e("Error", "Waiting didnt work!!");
-                    e.printStackTrace();
-                }
-            }
-        };
-        Thread th = new Thread(bd) ;
-        th.start();
-        try {
-            th.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        //Obtenemos la lista de los clientes en la BBDD
-        this.clients.addLlista(bd.obClients());
     }
 
     @Override
@@ -54,14 +26,15 @@ public class DashBoard extends AppCompatActivity implements View.OnClickListener
         Intent intent;
         switch (v.getId()) {
             case R.id.btn_add_user:
-                intent = new Intent();
+                intent = new Intent(this,lector_qr.class);
+                intent.putExtra("opcion",1);
                 break;
             case R.id.btn_clientes:
                 intent = new Intent(this,lista_clientes.class);
-                intent.putExtra("clients",clients.getClients());
                 break;
             case R.id.btn_leer_qr:
                 intent = new Intent(this,lector_qr.class);
+                intent.putExtra("opcion",0);
                 break;
             default:
                 intent = new Intent();

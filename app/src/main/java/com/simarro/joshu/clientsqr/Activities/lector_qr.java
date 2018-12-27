@@ -33,7 +33,7 @@ public class lector_qr extends AppCompatActivity {
     private final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     private String token = "";
     private String tokenanterior = "";
-    private TextView txtTk;
+    private int op;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class lector_qr extends AppCompatActivity {
         barcodeDetector = new BarcodeDetector.Builder(getApplicationContext()).setBarcodeFormats(Barcode.QR_CODE).build();
         cameraSource = new CameraSource.Builder(getApplicationContext(), barcodeDetector).setRequestedPreviewSize(800, 600).setAutoFocusEnabled(true).build();
         cameraView = (SurfaceView) findViewById(R.id.camera_view);
+        op = getIntent().getExtras().getInt("opcion");
         cameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
@@ -103,10 +104,14 @@ public class lector_qr extends AppCompatActivity {
                             startActivity(shareIntent);
                         }*/
                         Intent intent = new Intent();
-                        intent.setClass(lector_qr.this.getApplicationContext(),mostrarQR.class);
-                        intent.putExtra("qr",token);
+                        if(op == 0) {
+                            intent.setClass(lector_qr.this.getApplicationContext(), mostrarQR.class);
+                            intent.putExtra("qr", token);
+                        }else{
+                            intent.setClass(lector_qr.this.getApplicationContext(), add_client.class);
+                            intent.putExtra("qr", token);
+                        }
                         startActivity(intent);
-
 
                         new Thread(new Runnable() {
                             public void run() {

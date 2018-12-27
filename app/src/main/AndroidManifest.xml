@@ -22,7 +22,8 @@
         <activity android:name=".Activities.DashBoard" />
         <activity android:name=".Activities.lista_clientes" />
         <activity android:name=".Activities.lector_qr" />
-        <activity android:name=".Activities.mostrarQR"></activity>
+        <activity android:name=".Activities.mostrarQR" />
+        <activity android:name=".Activities.add_client" />
     </application>
 
 </manifest>

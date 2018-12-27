@@ -25,7 +25,7 @@
             android:layout_weight="1"
             android:background="@drawable/selector_menu"
             android:onClick="onClick"
-            app:srcCompat="@drawable/group" />
+            app:srcCompat="@drawable/lista" />
 
         <ImageButton
             android:id="@+id/btn_add_user"
@@ -34,7 +34,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/selector_menu"
-            android:onClick="onClick" />
+            android:onClick="onClick"
+            android:src="@drawable/report" />
     </LinearLayout>
 
     <LinearLayout
