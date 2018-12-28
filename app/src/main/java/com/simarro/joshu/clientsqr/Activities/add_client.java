@@ -60,7 +60,14 @@ public class add_client extends AppCompatActivity implements View.OnClickListene
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Toast.makeText(this,"El cliente "+id+" con nombre "+txt_nom+" ha sido registrado correctamente",Toast.LENGTH_SHORT).show();
+            if(bd.getResult() == 0){
+                Toast.makeText(this, "El cliente " + id + " con nombre " + txt_nom + " ha sido registrado correctamente", Toast.LENGTH_SHORT).show();
+
+            }else{
+                Toast.makeText(this, "El cliente " + id + " ya está registrado", Toast.LENGTH_SHORT).show();
+            }
+            Intent intent = new Intent(this,DashBoard.class);
+            startActivity(intent);
         }
     }
 

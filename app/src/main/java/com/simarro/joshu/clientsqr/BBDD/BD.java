@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class BD implements Runnable {
 
-    private String user, password, ip;
+    private int result;
     private Connection conexionMySQL;
     private ArrayList<Client> clientes;
     private boolean conectado = false;
@@ -32,6 +32,10 @@ public class BD implements Runnable {
 
     public BD(Context con) {
         this.context = con;
+    }
+
+    public int getResult(){
+        return this.result;
     }
 
     public int getMostrarpunts(){
@@ -100,13 +104,26 @@ public class BD implements Runnable {
 
     public void addCliente(int id, String nom, String mote, String tlf){
         java.sql.PreparedStatement stmt = null;
+        java.sql.PreparedStatement stmt2 = null;
+        this.result = 1;
+        ResultSet rs = null;
+        Client c = null;
         try {
             stmt = conexionMySQL.prepareCall("INSERT INTO clients (id, nombre, mote, telefono, punts) VALUES (?,?,?,?,0)");
-            stmt.setInt(1, id);
-            stmt.setString(2,nom);
-            stmt.setString(3,mote);
-            stmt.setString(4,tlf);
-            stmt.executeUpdate();
+            stmt2 = conexionMySQL.prepareCall("SELECT * FROM clients WHERE id=?");
+            stmt2.setInt(1, id);
+            rs = stmt2.executeQuery();
+            while (rs.next()) {
+                c = new Client();
+            }
+            if(c==null) {
+                this.result = 0;
+                stmt.setInt(1, id);
+                stmt.setString(2, nom);
+                stmt.setString(3, mote);
+                stmt.setString(4, tlf);
+                stmt.executeUpdate();
+            }
         }catch (SQLException e){
             System.out.println(e);
         } finally {
