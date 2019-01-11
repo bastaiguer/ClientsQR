@@ -3,6 +3,7 @@ package com.simarro.joshu.clientsqr.Activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -48,6 +49,10 @@ public class lista_clientes extends AppCompatActivity {
         }
         //Obtenemos la lista de los clientes en la BBDD
         this.clients.addLlista(bd.obClients());
-        llista.setAdapter(new adapterListClients(clients.getClients(),this.getApplicationContext()));
+        if(this.clients.size() > 0) {
+            llista.setAdapter(new adapterListClients(clients.getClients(), this.getApplicationContext()));
+        }else{
+            findViewById(R.id.clients_not_size).setVisibility(View.VISIBLE);
+        }
     }
 }

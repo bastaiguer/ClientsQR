@@ -24,8 +24,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/selector_menu"
-            android:onClick="onClick"
-            app:srcCompat="@drawable/lista" />
+            android:foreground="@drawable/lista"
+            android:foregroundGravity="center"
+            android:onClick="onClick" />
 
         <ImageButton
             android:id="@+id/btn_add_user"
@@ -34,8 +35,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/selector_menu"
-            android:onClick="onClick"
-            android:src="@drawable/report" />
+            android:foreground="@drawable/report"
+            android:foregroundGravity="center"
+            android:onClick="onClick" />
     </LinearLayout>
 
     <LinearLayout
@@ -53,7 +55,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/selector_menu"
-            android:onClick="onClick"
-            app:srcCompat="@drawable/qr" />
+            android:foreground="@drawable/qr"
+            android:foregroundGravity="center"
+            android:onClick="onClick" />
     </LinearLayout>
 </LinearLayout>

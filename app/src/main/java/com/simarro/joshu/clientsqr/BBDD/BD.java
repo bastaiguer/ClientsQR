@@ -38,30 +38,15 @@ public class BD implements Runnable {
         return this.result;
     }
 
-    public int getMostrarpunts(){
-        return this.mostrarpunts;
-    }
-
-    public int getAddPunts(){
-        return addPunts;
-    }
-
     public ArrayList<Client> obClients() {
         return this.clientes;
     }
 
-    public Connection getConexion() {
-        return conexionMySQL;
-    }
 
-    public void setConexion(Connection conexionMySQL) {
-        this.conexionMySQL = conexionMySQL;
-    }
-
-    public void conectarBDMySQL() {
+    protected void conectarBDMySQL() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String urlOdbc = "jdbc:mysql://81.202.185.179:6768/clientsqr";
+            String urlOdbc = "jdbc:mysql://81.202.185.179:6767/clientsqr";
             conexionMySQL = (DriverManager.getConnection(urlOdbc, "picanya", "picanya"));
             if (!conexionMySQL.isClosed()) {
                 System.out.println("Conexión establecida");
@@ -82,7 +67,7 @@ public class BD implements Runnable {
         }
     }
 
-    public void modPuntos(int x, int id) {
+    protected void modPuntos(int x, int id) {
         java.sql.PreparedStatement stmt = null;
         try {
             stmt = conexionMySQL.prepareCall("UPDATE clients SET punts=? WHERE id=?");
@@ -102,7 +87,7 @@ public class BD implements Runnable {
         }
     }
 
-    public void addCliente(int id, String nom, String mote, String tlf){
+    protected void addCliente(int id, String nom, String mote, String tlf){
         java.sql.PreparedStatement stmt = null;
         java.sql.PreparedStatement stmt2 = null;
         this.result = 1;
@@ -137,37 +122,41 @@ public class BD implements Runnable {
         }
     }
 
-    public void getClientes() {
-        this.clientes = new ArrayList<>();
-        java.sql.PreparedStatement stmt = null;
-        Client client;
-        ResultSet rs = null;
-        try {
-            stmt = this.conexionMySQL.prepareStatement("SELECT * FROM clients");
-            rs = stmt.executeQuery();
-            while (rs.next()) {
-                client = new Client();
-                client.setId(rs.getInt("id"));
-                client.setNombre(rs.getString("nombre"));
-                client.setMote(rs.getString("mote"));
-                client.setTelefono(rs.getString("telefono"));
-                client.setPunts(rs.getInt("punts"));
-                this.clientes.add(client);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
+    public Connection getConexionMySQL() {
+        return conexionMySQL;
+    }
+
+    protected void getClientes() {
+            this.clientes = new ArrayList<>();
+            java.sql.PreparedStatement stmt = null;
+            Client client;
+            ResultSet rs = null;
             try {
-                if (rs != null) {
-                    rs.close();
+                stmt = this.conexionMySQL.prepareStatement("SELECT * FROM clients");
+                rs = stmt.executeQuery();
+                while (rs.next()) {
+                    client = new Client();
+                    client.setId(rs.getInt("id"));
+                    client.setNombre(rs.getString("nombre"));
+                    client.setMote(rs.getString("mote"));
+                    client.setTelefono(rs.getString("telefono"));
+                    client.setPunts(rs.getInt("punts"));
+                    this.clientes.add(client);
                 }
-                if (stmt != null) {
-                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (rs != null) {
+                        rs.close();
+                    }
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                } catch (SQLException ex) {
+                    System.out.println("Error al cerrar la conexión...");
                 }
-            } catch (SQLException ex) {
-                System.out.println("Error al cerrar la conexión...");
             }
-        }
 
     }
 
