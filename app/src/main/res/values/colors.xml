@@ -5,6 +5,7 @@
     <color name="colorAccent">#D81B60</color>
     <color name="fons">#8d8efc</color>
     <color name="separador">#5678cc</color>
-    <color name="altre">#b8cdff</color>
+    <color name="altre">#B8CDFF</color>
     <color name="txt">#08225e</color>
+    <color name="bar">#E7E8EB</color>
 </resources>

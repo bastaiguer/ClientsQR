@@ -8,7 +8,6 @@
     android:background="@color/separador"
     android:orientation="vertical"
     tools:context=".Activities.DashBoard">
-
     <LinearLayout
         android:id="@+id/ll3"
         android:layout_width="match_parent"
@@ -22,7 +21,7 @@
             style="@style/Estilo_app"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:background="@drawable/selector_menu"
             android:foreground="@drawable/lista"
             android:foregroundGravity="center"
@@ -33,11 +32,12 @@
             style="@style/Estilo_app"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:background="@drawable/selector_menu"
             android:foreground="@drawable/report"
             android:foregroundGravity="center"
             android:onClick="onClick" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -53,7 +53,7 @@
             style="@style/Estilo_app"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:background="@drawable/selector_menu"
             android:foreground="@drawable/qr"
             android:foregroundGravity="center"
