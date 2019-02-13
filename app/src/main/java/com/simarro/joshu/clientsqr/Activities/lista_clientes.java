@@ -76,13 +76,18 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch(item.getItemId()){
             case R.id.whatsapp:
-                Intent intent = new Intent(this,comunicacion_clientes.class);
+                intent = new Intent(this,comunicacion_clientes.class);
                 startActivity(intent);
                 break;
             case R.id.ordenar_por_puntos:
                 ordenarPorPuntos();
+                break;
+            case R.id.graficos:
+                intent = new Intent(this,graficos.class);
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
