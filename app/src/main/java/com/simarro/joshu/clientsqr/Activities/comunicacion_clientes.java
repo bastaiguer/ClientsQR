@@ -18,11 +18,8 @@ import com.simarro.joshu.clientsqr.R;
 
 public class comunicacion_clientes extends AppCompatActivity implements View.OnClickListener{
 
-    private Button btn_whats,btn_llamada;
+    private Button btn_whats;
     private EditText ed_whats_msg;
-    private Spinner telefonos;
-    private SpinnerAdapter spinnerAdapter;
-    private String[] tlfs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +28,6 @@ public class comunicacion_clientes extends AppCompatActivity implements View.OnC
         btn_whats = findViewById(R.id.btn_whats_msg);
         btn_whats.setOnClickListener(this);
         ed_whats_msg = findViewById(R.id.edit_whats_msg);
-        btn_llamada = findViewById(R.id.btn_llamar);
-        btn_llamada.setOnClickListener(this);
-        telefonos = findViewById(R.id.spinner_tlf);
-        tlfs = new String[]{"Selecciona un teléfono","1","2"};
-        spinnerAdapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,tlfs);
-        telefonos.setAdapter(spinnerAdapter);
     }
 
     @Override
