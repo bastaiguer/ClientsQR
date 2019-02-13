@@ -18,7 +18,7 @@
     <item
         android:id="@+id/ordenar_por_puntos"
         android:icon="@drawable/puntos"
-        android:orderInCategory="3"
+        android:orderInCategory="4"
         android:title="Ordenar por puntos"
         app:showAsAction="always" />
 </menu>

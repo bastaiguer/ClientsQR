@@ -1,5 +1,6 @@
 package com.simarro.joshu.clientsqr.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -7,7 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -16,13 +17,14 @@ import com.simarro.joshu.clientsqr.BBDD.BD;
 import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.Pojo.LlistaClients;
 import com.simarro.joshu.clientsqr.R;
+import com.simarro.joshu.clientsqr.Resources.DialogoLlamada;
+import com.simarro.joshu.clientsqr.Resources.adapterListClients;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class lista_clientes extends AppCompatActivity {
+public class lista_clientes extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private LlistaClients clients = new LlistaClients();
     private ListView llista;
@@ -65,6 +67,7 @@ public class lista_clientes extends AppCompatActivity {
         if(this.clients.size() > 0) {
             adapter = new adapterListClients(clients.getClients(), this.getApplicationContext());
             llista.setAdapter(adapter);
+            llista.setOnItemClickListener(this);
         }else{
             findViewById(R.id.clients_not_size).setVisibility(View.VISIBLE);
         }
@@ -75,7 +78,8 @@ public class lista_clientes extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.whatsapp:
-                //Enviar missatge de difusió whatsapp
+                Intent intent = new Intent(this,comunicacion_clientes.class);
+                startActivity(intent);
                 break;
             case R.id.ordenar_por_puntos:
                 ordenarPorPuntos();
@@ -128,9 +132,23 @@ public class lista_clientes extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                LlistaClients llistaBusqueda = new LlistaClients();
+                for(Client c:clients){
+                    if(c.getNombre().contains(newText) || c.getTelefono().contains(newText)){
+                        llistaBusqueda.add(c);
+                    }
+                }
+                adapter = new adapterListClients(llistaBusqueda,getApplicationContext());
+                llista.setAdapter(adapter);
                 return false;
             }
         });
         return true;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        DialogoLlamada dialeg = DialogoLlamada.newInstance(clients.get(position));
+        dialeg.show(getSupportFragmentManager(),"dialegCridada");
     }
 }

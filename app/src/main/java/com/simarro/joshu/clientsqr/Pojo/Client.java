@@ -8,7 +8,7 @@ public class Client implements Serializable {
     private String nombre, mote, telefono;
 
     public Client(){
-
+        super();
     }
 
     public Client(String nombre, String mote, String telefono) {
