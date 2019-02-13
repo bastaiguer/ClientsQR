@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.simarro.joshu.clientsqr.BBDD.BD;
 import com.simarro.joshu.clientsqr.Pojo.Client;
@@ -86,7 +85,7 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
                 ordenarPorPuntos();
                 break;
             case R.id.graficos:
-                intent = new Intent(this,graficos.class);
+                intent = new Intent(this, panel_control.class);
                 startActivity(intent);
                 break;
         }

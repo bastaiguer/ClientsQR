@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Activities.graficos"></activity>
+        <activity android:name=".Activities.panel_control"></activity>
         <activity android:name=".Activities.comunicacion_clientes" />
         <activity android:name=".Activities.MainActivity">
             <intent-filter>

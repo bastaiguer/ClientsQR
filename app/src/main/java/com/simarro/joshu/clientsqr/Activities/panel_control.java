@@ -1,36 +1,41 @@
 package com.simarro.joshu.clientsqr.Activities;
 
-import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.simarro.joshu.clientsqr.Fragments.AdministrarClientes_Fragment;
+import com.simarro.joshu.clientsqr.Fragments.Mapa;
 import com.simarro.joshu.clientsqr.Fragments.Tabla_Fragment;
+import com.simarro.joshu.clientsqr.Pojo.Client;
+import com.simarro.joshu.clientsqr.Pojo.LlistaClients;
 import com.simarro.joshu.clientsqr.R;
 import com.simarro.joshu.clientsqr.Resources.MyFragmentPagerAdapter;
 
 import java.util.ArrayList;
 
-public class graficos extends FragmentActivity {
+public class panel_control extends FragmentActivity {
 
     private ViewPager pager = null;
     private TextView titulo;
     private MyFragmentPagerAdapter pagerAdapter = null;
+    private TabLayout tabsTitulos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_graficos);
-        //this.getLayoutInflater().inflate(R.layout.fragment_pantallas,(RelativeLayout)findViewById(R.id.contenedor_viewPager),true);
+        setContentView(R.layout.activity_panel_control);
         this.pager = this.findViewById(R.id.pager);
-        titulo = findViewById(R.id.text_titulo_fragment);
         MyFragmentPagerAdapter pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+        pagerAdapter.addFragment(AdministrarClientes_Fragment.newInstance());
         pagerAdapter.addFragment(Tabla_Fragment.newInstance());
-        pagerAdapter.addFragment(Tabla_Fragment.newInstance());
+        pagerAdapter.addFragment(Mapa.newInstance());
         this.pager.setAdapter(pagerAdapter);
+        tabsTitulos = findViewById(R.id.tabLayout_titulos);
+        tabsTitulos.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tabsTitulos.setupWithViewPager(pager);
     }
 
 
