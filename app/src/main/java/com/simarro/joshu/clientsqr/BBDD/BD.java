@@ -122,8 +122,80 @@ public class BD implements Runnable {
         }
     }
 
+    protected void modCliente(int id, String nom, String mote, String tlf, int pts){
+        java.sql.PreparedStatement stmt = null;
+        java.sql.PreparedStatement stmt2;
+        this.result = 1;
+        ResultSet rs;
+        Client c = null;
+        try {
+            stmt = conexionMySQL.prepareCall("UPDATE clients SET nombre=?, mote=?, telefono=?, punts=? WHERE id=?");
+            stmt2 = conexionMySQL.prepareCall("SELECT * FROM clients WHERE id=?");
+            stmt2.setInt(1, id);
+            rs = stmt2.executeQuery();
+            while (rs.next()) {
+                c = new Client();
+            }
+            if(c!=null) {
+                this.result = 0;
+                stmt.setString(1, nom);
+                stmt.setString(2, mote);
+                stmt.setString(3, tlf);
+                stmt.setInt(4, pts);
+                stmt.setInt(5, id);
+                stmt.executeUpdate();
+            }else{
+                System.out.println("No se ha encontrado el cliente...");
+            }
+        }catch (SQLException e){
+            System.out.println(e);
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Error al cerrar la conexión...");
+            }
+        }
+    }
+
     public Connection getConexionMySQL() {
         return conexionMySQL;
+    }
+
+    protected void delCliente(int id){
+        java.sql.PreparedStatement stmt = null;
+        java.sql.PreparedStatement stmt2;
+        this.result = 1;
+        ResultSet rs;
+        Client c = null;
+        try {
+            stmt = conexionMySQL.prepareCall("DELETE FROM clients WHERE id=?");
+            stmt2 = conexionMySQL.prepareCall("SELECT * FROM clients WHERE id=?");
+            stmt2.setInt(1, id);
+            rs = stmt2.executeQuery();
+            while (rs.next()) {
+                c = new Client();
+            }
+            if(c!=null) {
+                this.result = 0;
+                stmt.setInt(1, id);
+                stmt.executeUpdate();
+            }else{
+                System.out.println("No se ha encontrado el cliente...");
+            }
+        }catch (SQLException e){
+            System.out.println(e);
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Error al cerrar la conexión...");
+            }
+        }
     }
 
     protected void getClientes() {

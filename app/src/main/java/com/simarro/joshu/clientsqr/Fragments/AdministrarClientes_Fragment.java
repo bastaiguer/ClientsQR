@@ -4,12 +4,14 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.simarro.joshu.clientsqr.BBDD.BD;
 import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.Pojo.LlistaClients;
 import com.simarro.joshu.clientsqr.R;
@@ -27,9 +29,7 @@ import java.util.ArrayList;
  */
 public class AdministrarClientes_Fragment extends Fragment implements AdapterView.OnItemClickListener {
 
-    private ListView lista;
-    private adapterListClients adapter;
-    private LlistaClients clients;
+
 
     public AdministrarClientes_Fragment() {
         // Required empty public constructor
@@ -54,14 +54,6 @@ public class AdministrarClientes_Fragment extends Fragment implements AdapterVie
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_administrar_clientes_,container,false);
         rootView.setBackgroundColor(getResources().getColor(R.color.bar));
-        lista = rootView.findViewById(R.id.lista_panel_clientes);
-        /*clients = new LlistaClients();
-        clients.addLlista((ArrayList<Client>) getArguments().getSerializable("Clients"));
-        if(clients!=null){
-            adapter = new adapterListClients(clients.getClients(),getContext());
-            lista.setAdapter(adapter);
-            //lista.setOnItemClickListener(this);
-        }*/
         return rootView;
     }
 

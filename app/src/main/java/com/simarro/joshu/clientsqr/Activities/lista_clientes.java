@@ -17,19 +17,23 @@ import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.Pojo.LlistaClients;
 import com.simarro.joshu.clientsqr.R;
 import com.simarro.joshu.clientsqr.Resources.DialogoLlamada;
+import com.simarro.joshu.clientsqr.Resources.DialogoOpcionesClient;
 import com.simarro.joshu.clientsqr.Resources.adapterListClients;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class lista_clientes extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class lista_clientes extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private LlistaClients clients = new LlistaClients();
     private ListView llista;
     private Toolbar toolbar;
     private adapterListClients adapter;
+    private DialogoLlamada dialeg;
+    private DialogoOpcionesClient dialeg2 = new DialogoOpcionesClient();
     private BD bd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +42,7 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
         toolbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
         //Accedemos a la BBDD mediante un Thread
-        bd = new BD(getApplicationContext()){
+        bd = new BD(getApplicationContext()) {
             public void run() {
                 try {
                     synchronized (this) {
@@ -54,7 +58,7 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
                 }
             }
         };
-        Thread th = new Thread(bd) ;
+        Thread th = new Thread(bd);
         th.start();
         try {
             th.join();
@@ -63,22 +67,23 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
         }
         //Obtenemos la lista de los clientes en la BBDD
         this.clients.addLlista(bd.obClients());
-        if(this.clients.size() > 0) {
+        if (this.clients.size() > 0) {
             adapter = new adapterListClients(clients.getClients(), this.getApplicationContext());
             llista.setAdapter(adapter);
             llista.setOnItemClickListener(this);
-        }else{
+        } else {
             findViewById(R.id.clients_not_size).setVisibility(View.VISIBLE);
         }
-        getSupportActionBar().setTitle(clients.size()+" Clients");
+        getSupportActionBar().setTitle(clients.size() + " Clients");
+        llista.setOnItemLongClickListener(this);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.whatsapp:
-                intent = new Intent(this,comunicacion_clientes.class);
+                intent = new Intent(this, comunicacion_clientes.class);
                 startActivity(intent);
                 break;
             case R.id.ordenar_por_puntos:
@@ -92,18 +97,19 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
         return super.onOptionsItemSelected(item);
     }
 
-    public void ordenarPorPuntos(){
+
+    public void ordenarPorPuntos() {
         LlistaClients c = new LlistaClients(), c2 = new LlistaClients();
         ArrayList<Integer> punts = new ArrayList<Integer>();
         c.addLlista(bd.obClients());
-        for(Client cl:c){
+        for (Client cl : c) {
             punts.add(cl.getPunts());
         }
         Comparator<Integer> comparador = Collections.reverseOrder();
         Collections.sort(punts, comparador);
-        for(Integer i: punts){
-            for(int j = 0; j < c.size(); j++){
-                if(c.get(j)!=null) {
+        for (Integer i : punts) {
+            for (int j = 0; j < c.size(); j++) {
+                if (c.get(j) != null) {
                     if (c.get(j).getPunts() == i) {
                         c2.add(c.get(j));
                         c.set(j, null);
@@ -111,25 +117,25 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
                 }
             }
         }
-        adapter = new adapterListClients(c2,getApplicationContext());
+        adapter = new adapterListClients(c2, getApplicationContext());
         llista.setAdapter(adapter);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_lista_cliente,menu);
+        getMenuInflater().inflate(R.menu.menu_lista_cliente, menu);
         MenuItem search = menu.findItem(R.id.app_bar_search);
         SearchView searchView = (SearchView) search.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 LlistaClients llistaBusqueda = new LlistaClients();
-                for(Client c:clients){
-                    if(c.getNombre().contains(query) || c.getTelefono().contains(query)){
+                for (Client c : clients) {
+                    if (c.getNombre().contains(query) || c.getTelefono().contains(query)) {
                         llistaBusqueda.add(c);
                     }
                 }
-                adapter = new adapterListClients(llistaBusqueda,getApplicationContext());
+                adapter = new adapterListClients(llistaBusqueda, getApplicationContext());
                 llista.setAdapter(adapter);
                 return false;
             }
@@ -137,12 +143,12 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
             @Override
             public boolean onQueryTextChange(String newText) {
                 LlistaClients llistaBusqueda = new LlistaClients();
-                for(Client c:clients){
-                    if(c.getNombre().contains(newText) || c.getTelefono().contains(newText)){
+                for (Client c : clients) {
+                    if (c.getNombre().contains(newText) || c.getTelefono().contains(newText)) {
                         llistaBusqueda.add(c);
                     }
                 }
-                adapter = new adapterListClients(llistaBusqueda,getApplicationContext());
+                adapter = new adapterListClients(llistaBusqueda, getApplicationContext());
                 llista.setAdapter(adapter);
                 return false;
             }
@@ -152,7 +158,16 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        DialogoLlamada dialeg = DialogoLlamada.newInstance(clients.get(position));
-        dialeg.show(getSupportFragmentManager(),"dialegCridada");
+        if (!dialeg2.isAdded()) {
+            dialeg = DialogoLlamada.newInstance(clients.get(position));
+            dialeg.show(getSupportFragmentManager(), "dialegCridada");
+        }
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        dialeg2 = DialogoOpcionesClient.newInstance(clients.get(position));
+        dialeg2.show(getSupportFragmentManager(), "dialegModDel");
+        return false;
     }
 }
