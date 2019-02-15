@@ -1,21 +1,24 @@
 package com.simarro.joshu.clientsqr.Pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Client implements Serializable {
 
     private int id, punts;
     private String nombre, mote, telefono;
+    private Date registro;
 
     public Client(){
         super();
     }
 
-    public Client(String nombre, String mote, String telefono) {
+    public Client(String nombre, String mote, String telefono,Date registro) {
         this.nombre = nombre;
         this.mote = mote;
         this.telefono = telefono;
         this.punts = 0;
+        this.registro = registro;
     }
 
     public int getId() {
@@ -56,5 +59,13 @@ public class Client implements Serializable {
 
     public void setPunts(int punts) {
         this.punts = punts;
+    }
+
+    public Date getRegistro() {
+        return registro;
+    }
+
+    public void setRegistro(Date registro) {
+        this.registro = registro;
     }
 }

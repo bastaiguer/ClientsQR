@@ -12,6 +12,9 @@ import android.widget.Toast;
 import com.simarro.joshu.clientsqr.BBDD.BD;
 import com.simarro.joshu.clientsqr.R;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class add_client extends AppCompatActivity implements View.OnClickListener{
 
     private String txt_nom, txt_mote, txt_tlf;

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_seleccionado"
-    tools:context=".Activities.comunicacion_clientes">
+    tools:context=".Activities.enviar_whatsapp">
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline38"

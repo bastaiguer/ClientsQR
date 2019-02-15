@@ -83,7 +83,7 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
         Intent intent;
         switch (item.getItemId()) {
             case R.id.whatsapp:
-                intent = new Intent(this, comunicacion_clientes.class);
+                intent = new Intent(this, enviar_whatsapp.class);
                 startActivity(intent);
                 break;
             case R.id.ordenar_por_puntos:

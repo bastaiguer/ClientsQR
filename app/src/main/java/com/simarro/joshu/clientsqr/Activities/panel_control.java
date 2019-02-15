@@ -6,15 +6,10 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.widget.TextView;
 
-import com.simarro.joshu.clientsqr.Fragments.AdministrarClientes_Fragment;
 import com.simarro.joshu.clientsqr.Fragments.Mapa;
 import com.simarro.joshu.clientsqr.Fragments.Tabla_Fragment;
-import com.simarro.joshu.clientsqr.Pojo.Client;
-import com.simarro.joshu.clientsqr.Pojo.LlistaClients;
 import com.simarro.joshu.clientsqr.R;
 import com.simarro.joshu.clientsqr.Resources.MyFragmentPagerAdapter;
-
-import java.util.ArrayList;
 
 public class panel_control extends FragmentActivity {
 
@@ -29,7 +24,6 @@ public class panel_control extends FragmentActivity {
         setContentView(R.layout.activity_panel_control);
         this.pager = this.findViewById(R.id.pager);
         MyFragmentPagerAdapter pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
-        pagerAdapter.addFragment(AdministrarClientes_Fragment.newInstance());
         pagerAdapter.addFragment(Tabla_Fragment.newInstance());
         pagerAdapter.addFragment(Mapa.newInstance());
         this.pager.setAdapter(pagerAdapter);

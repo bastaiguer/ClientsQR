@@ -3,8 +3,6 @@ package com.simarro.joshu.clientsqr.Activities;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Camera;
-import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +11,6 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.webkit.URLUtil;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
@@ -105,7 +101,7 @@ public class lector_qr extends AppCompatActivity {
                         }*/
                         Intent intent = new Intent();
                         if(op == 0) {
-                            intent.setClass(lector_qr.this.getApplicationContext(), mostrarQR.class);
+                            intent.setClass(lector_qr.this.getApplicationContext(), modificar_puntos.class);
                             intent.putExtra("qr", token);
                         }else{
                             intent.setClass(lector_qr.this.getApplicationContext(), add_client.class);

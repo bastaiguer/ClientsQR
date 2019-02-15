@@ -15,7 +15,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class BD implements Runnable {
 
@@ -46,7 +49,7 @@ public class BD implements Runnable {
     protected void conectarBDMySQL() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String urlOdbc = "jdbc:mysql://81.202.185.179:6767/clientsqr";
+            String urlOdbc = "jdbc:mysql://192.168.0.17:3306/clientsqr";
             conexionMySQL = (DriverManager.getConnection(urlOdbc, "picanya", "picanya"));
             if (!conexionMySQL.isClosed()) {
                 System.out.println("Conexión establecida");
@@ -94,7 +97,7 @@ public class BD implements Runnable {
         ResultSet rs = null;
         Client c = null;
         try {
-            stmt = conexionMySQL.prepareCall("INSERT INTO clients (id, nombre, mote, telefono, punts) VALUES (?,?,?,?,0)");
+            stmt = conexionMySQL.prepareCall("INSERT INTO clients (id, nombre, mote, telefono, punts, registro) VALUES (?,?,?,?,0,?)");
             stmt2 = conexionMySQL.prepareCall("SELECT * FROM clients WHERE id=?");
             stmt2.setInt(1, id);
             rs = stmt2.executeQuery();
@@ -107,6 +110,7 @@ public class BD implements Runnable {
                 stmt.setString(2, nom);
                 stmt.setString(3, mote);
                 stmt.setString(4, tlf);
+                stmt.setTimestamp(5, new Timestamp(new Date().getTime()));
                 stmt.executeUpdate();
             }
         }catch (SQLException e){
@@ -213,6 +217,7 @@ public class BD implements Runnable {
                     client.setMote(rs.getString("mote"));
                     client.setTelefono(rs.getString("telefono"));
                     client.setPunts(rs.getInt("punts"));
+                    client.setRegistro(rs.getTimestamp("registro"));
                     this.clientes.add(client);
                 }
             } catch (SQLException e) {

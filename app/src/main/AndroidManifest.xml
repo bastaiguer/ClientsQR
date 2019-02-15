@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".Activities.panel_control"></activity>
-        <activity android:name=".Activities.comunicacion_clientes" />
+        <activity android:name=".Activities.enviar_whatsapp" />
         <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +26,7 @@
         <activity android:name=".Activities.DashBoard" />
         <activity android:name=".Activities.lista_clientes" />
         <activity android:name=".Activities.lector_qr" />
-        <activity android:name=".Activities.mostrarQR" />
+        <activity android:name=".Activities.modificar_puntos" />
         <activity android:name=".Activities.add_client" />
     </application>
 

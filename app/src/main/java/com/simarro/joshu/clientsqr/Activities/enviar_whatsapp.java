@@ -4,19 +4,13 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.simarro.joshu.clientsqr.R;
 
-public class comunicacion_clientes extends AppCompatActivity implements View.OnClickListener{
+public class enviar_whatsapp extends AppCompatActivity implements View.OnClickListener{
 
     private Button btn_whats;
     private EditText ed_whats_msg;
@@ -24,7 +18,7 @@ public class comunicacion_clientes extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comunicacion_clientes);
+        setContentView(R.layout.activity_enviar_whatsapp);
         btn_whats = findViewById(R.id.btn_whats_msg);
         btn_whats.setOnClickListener(this);
         ed_whats_msg = findViewById(R.id.edit_whats_msg);

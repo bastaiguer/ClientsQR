@@ -13,9 +13,7 @@ import com.simarro.joshu.clientsqr.BBDD.BD;
 import com.simarro.joshu.clientsqr.Pojo.LlistaClients;
 import com.simarro.joshu.clientsqr.R;
 
-import java.util.ArrayList;
-
-public class mostrarQR extends AppCompatActivity implements View.OnClickListener{
+public class modificar_puntos extends AppCompatActivity implements View.OnClickListener{
 
     private LlistaClients clients = new LlistaClients();
     private String qr;
@@ -26,7 +24,7 @@ public class mostrarQR extends AppCompatActivity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mostrar_qr);
+        setContentView(R.layout.activity_modificar_puntos);
         qr = getIntent().getExtras().getString("qr");
         numPunts = findViewById(R.id.txt_num_punts);
         anyPunts = findViewById(R.id.ed_punts);
