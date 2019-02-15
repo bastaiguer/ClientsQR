@@ -1,6 +1,7 @@
 package com.simarro.joshu.clientsqr.Activities;
 
 import android.content.Intent;
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -38,6 +39,7 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_clientes);
+
         llista = findViewById(R.id.listView_clients);
         toolbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(toolbar);

@@ -90,14 +90,14 @@ public class BD implements Runnable {
         }
     }
 
-    protected void addCliente(int id, String nom, String mote, String tlf){
+    protected void addCliente(int id, String nom, String mote, String tlf, double longitud, double latitud){
         java.sql.PreparedStatement stmt = null;
         java.sql.PreparedStatement stmt2 = null;
         this.result = 1;
         ResultSet rs = null;
         Client c = null;
         try {
-            stmt = conexionMySQL.prepareCall("INSERT INTO clients (id, nombre, mote, telefono, punts, registro) VALUES (?,?,?,?,0,?)");
+            stmt = conexionMySQL.prepareCall("INSERT INTO clients (id, nombre, mote, telefono, punts, registro, latitud, longitud) VALUES (?,?,?,?,0,?,?,?)");
             stmt2 = conexionMySQL.prepareCall("SELECT * FROM clients WHERE id=?");
             stmt2.setInt(1, id);
             rs = stmt2.executeQuery();
@@ -111,6 +111,8 @@ public class BD implements Runnable {
                 stmt.setString(3, mote);
                 stmt.setString(4, tlf);
                 stmt.setTimestamp(5, new Timestamp(new Date().getTime()));
+                stmt.setDouble(6,latitud);
+                stmt.setDouble(7,longitud);
                 stmt.executeUpdate();
             }
         }catch (SQLException e){
