@@ -45,20 +45,6 @@ public class add_client extends AppCompatActivity implements View.OnClickListene
         tlf = findViewById(R.id.ed_tlf_add);
         registrar = findViewById(R.id.btn_registrar);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        /*List<String> locationProviders = locationManager.getAllProviders();
-        LocationProvider aux;
-        //Elegim el proveidor de localització que més precisió tinga
-        for(String lp:locationProviders){
-            aux = locationManager.getProvider(lp);
-            if(locationProvider==null || aux.getAccuracy() > locationProvider.getAccuracy()){
-                locationProvider = aux;
-            }
-        }
-        Criteria req = new Criteria();
-        req.setAccuracy(Criteria.ACCURACY_FINE);
-        req.setAltitudeRequired(true);
-        String mejorProviderCrit = locationManager.getBestProvider(req, false);
-        */
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[] {

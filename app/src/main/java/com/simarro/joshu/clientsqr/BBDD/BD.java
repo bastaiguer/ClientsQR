@@ -8,6 +8,7 @@ import com.simarro.joshu.clientsqr.Activities.MainActivity;
 import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.mysql.jdbc.*;
 import com.mysql.jdbc.Driver;
+import com.simarro.joshu.clientsqr.Pojo.Punts;
 
 import java.sql.Array;
 import java.sql.Connection;
@@ -25,6 +26,7 @@ public class BD implements Runnable {
     private int result;
     private Connection conexionMySQL;
     private ArrayList<Client> clientes;
+    private ArrayList<Punts> punts;
     private boolean conectado = false;
     private int mostrarpunts, addPunts;
     private Context context;
@@ -43,6 +45,10 @@ public class BD implements Runnable {
 
     public ArrayList<Client> obClients() {
         return this.clientes;
+    }
+
+    public ArrayList<Punts> obPunts() {
+        return this.punts;
     }
 
 
@@ -126,6 +132,88 @@ public class BD implements Runnable {
                 System.out.println("Error al cerrar la conexión...");
             }
         }
+    }
+
+    protected void addRegistrePunts(int idclient, boolean operacio, int punts, double longitud, double latitud){
+        java.sql.PreparedStatement stmt = null;
+        java.sql.PreparedStatement stmt2;
+        java.sql.PreparedStatement stmt3;
+        this.result = 1;
+        int id = 0;
+        ResultSet rs;
+        Client c = null;
+        try {
+            stmt = conexionMySQL.prepareCall("INSERT INTO registre_punts (id, idclient, operacio, punts, registro, latitud, longitud) VALUES (?,?,?,?,?,?,?)");
+            stmt2 = conexionMySQL.prepareCall("SELECT * FROM clients WHERE id=?");
+            stmt3 = conexionMySQL.prepareCall("SELECT MAX( id )  FROM registre_punts");
+            stmt2.setInt(1, idclient);
+            rs = stmt2.executeQuery();
+            while (rs.next()) {
+                c = new Client();
+            }
+            if(c==null) {
+                rs = stmt3.executeQuery();
+                while(rs.next()){
+                    id = rs.getInt("id") + 1;
+                }
+                this.result = 0;
+                stmt.setInt(1, id);
+                stmt.setInt(2, idclient);
+                stmt.setBoolean(3, operacio);
+                stmt.setInt(4, punts);
+                stmt.setTimestamp(5, new Timestamp(new Date().getTime()));
+                stmt.setDouble(6,latitud);
+                stmt.setDouble(7,longitud);
+                stmt.executeUpdate();
+            }
+        }catch (SQLException e){
+            System.out.println(e);
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Error al cerrar la conexión...");
+            }
+        }
+    }
+
+    protected void getRegistrePuntsByIdClient(int id) {
+        this.punts = new ArrayList<>();
+        java.sql.PreparedStatement stmt = null;
+        Punts punts;
+        ResultSet rs = null;
+        try {
+            stmt = this.conexionMySQL.prepareStatement("SELECT * FROM registre_punts WHERE idclient = ?");
+            stmt.setInt(1,id);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                punts = new Punts();
+                punts.setId(rs.getInt("id"));
+                punts.setIdclient(rs.getInt("idclient"));
+                punts.setOperacio(rs.getBoolean("operacio"));
+                punts.setPunts(rs.getInt("punts"));
+                punts.setRegistro(rs.getTimestamp("registro"));
+                punts.setLongitud(rs.getDouble("longitud"));
+                punts.setLatitud(rs.getDouble("latitud"));
+                this.punts.add(punts);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Error al cerrar la conexión...");
+            }
+        }
+
     }
 
     protected void modCliente(int id, String nom, String mote, String tlf, int pts){
@@ -220,6 +308,8 @@ public class BD implements Runnable {
                     client.setTelefono(rs.getString("telefono"));
                     client.setPunts(rs.getInt("punts"));
                     client.setRegistro(rs.getTimestamp("registro"));
+                    client.setLongitud(rs.getDouble("longitud"));
+                    client.setLatitud(rs.getDouble("latitud"));
                     this.clientes.add(client);
                 }
             } catch (SQLException e) {

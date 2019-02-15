@@ -1,6 +1,12 @@
 package com.simarro.joshu.clientsqr.Activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +26,10 @@ public class modificar_puntos extends AppCompatActivity implements View.OnClickL
     private TextView numPunts;
     private EditText anyPunts;
     private int mostrarpunts, addPunts;
+    private LocationManager locationManager;
+    private static Location location;
+    private LocationListener locationListener;
+    private double longitud, latitud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +39,47 @@ public class modificar_puntos extends AppCompatActivity implements View.OnClickL
         numPunts = findViewById(R.id.txt_num_punts);
         anyPunts = findViewById(R.id.ed_punts);
         numPunts.setText(qr);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[] {
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION },
+                        123);
+
+                Toast.makeText(this,"Acceso a la ubicación no permitido...",Toast.LENGTH_SHORT).show();
+            }else{
+                locationListener = new LocationListener() {
+                    @Override
+                    public void onLocationChanged(Location location) {
+                        longitud = location.getLongitude();
+                        latitud = location.getLatitude();
+                        Toast.makeText(getApplicationContext(),longitud+" - "+latitud,Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
+                        longitud = location.getLongitude();
+                        latitud = location.getLatitude();
+                    }
+
+                    @Override
+                    public void onProviderEnabled(String provider) {
+                        longitud = location.getLongitude();
+                        latitud = location.getLatitude();
+                    }
+
+                    @Override
+                    public void onProviderDisabled(String provider) {
+
+                    }
+                };
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
+            }
+        }else{
+            Toast.makeText(this,"Deshabilitado Network Ubication Service",Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     @Override
@@ -84,6 +135,28 @@ public class modificar_puntos extends AppCompatActivity implements View.OnClickL
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                bd = new BD(getApplicationContext()){
+                    public void run() {
+                        try {
+                            synchronized (this) {
+                                wait(500);
+                                conectarBDMySQL();
+                                addRegistrePunts(Integer.parseInt(qr),true,Integer.parseInt(anyPunts.getText().toString()),longitud,latitud);
+                                cerrarConexion();
+                            }
+                        } catch (InterruptedException e) {
+                            Log.e("Error", "Waiting didnt work!!");
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                th = new Thread(bd) ;
+                th.start();
+                try {
+                    th.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 Toast.makeText(this,"El cliente Nº"+qr+" tiene "+addPunts+" puntos!",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_canjear_por_cupon:
@@ -105,6 +178,28 @@ public class modificar_puntos extends AppCompatActivity implements View.OnClickL
                         }
                     };
                     th = new Thread(bd);
+                    th.start();
+                    try {
+                        th.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    bd = new BD(getApplicationContext()){
+                        public void run() {
+                            try {
+                                synchronized (this) {
+                                    wait(500);
+                                    conectarBDMySQL();
+                                    addRegistrePunts(Integer.parseInt(qr),false,Integer.parseInt(anyPunts.getText().toString()),longitud,latitud);
+                                    cerrarConexion();
+                                }
+                            } catch (InterruptedException e) {
+                                Log.e("Error", "Waiting didnt work!!");
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    th = new Thread(bd) ;
                     th.start();
                     try {
                         th.join();

@@ -8,12 +8,13 @@ public class Client implements Serializable {
     private int id, punts;
     private String nombre, mote, telefono;
     private Date registro;
+    private Double latitud, longitud;
 
     public Client(){
         super();
     }
 
-    public Client(String nombre, String mote, String telefono,Date registro) {
+    public Client(String nombre, String mote, String telefono,Date registro, Double latitud, Double longitud) {
         this.nombre = nombre;
         this.mote = mote;
         this.telefono = telefono;
@@ -67,5 +68,21 @@ public class Client implements Serializable {
 
     public void setRegistro(Date registro) {
         this.registro = registro;
+    }
+
+    public Double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(Double latitud) {
+        this.latitud = latitud;
+    }
+
+    public Double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
     }
 }
