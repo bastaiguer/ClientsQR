@@ -16,6 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCKMhXKlzKq3MA97TrqhNJznpmQjPbPB8A" />
         <activity android:name=".Activities.panel_control"></activity>
         <activity android:name=".Activities.enviar_whatsapp" />
         <activity android:name=".Activities.MainActivity">
@@ -30,6 +36,7 @@
         <activity android:name=".Activities.lector_qr" />
         <activity android:name=".Activities.modificar_puntos" />
         <activity android:name=".Activities.add_client" />
+        <activity android:name=".Fragments.gestionarPreferencias" />
     </application>
 
 </manifest>

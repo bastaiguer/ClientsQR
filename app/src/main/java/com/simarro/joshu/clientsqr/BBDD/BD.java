@@ -39,7 +39,7 @@ public class BD implements Runnable {
         this.context = con;
     }
 
-    public int getResult(){
+    public int getResult() {
         return this.result;
     }
 
@@ -96,7 +96,7 @@ public class BD implements Runnable {
         }
     }
 
-    protected void addCliente(int id, String nom, String mote, String tlf, double longitud, double latitud){
+    protected void addCliente(int id, String nom, String mote, String tlf, double longitud, double latitud) {
         java.sql.PreparedStatement stmt = null;
         java.sql.PreparedStatement stmt2 = null;
         this.result = 1;
@@ -110,18 +110,18 @@ public class BD implements Runnable {
             while (rs.next()) {
                 c = new Client();
             }
-            if(c==null) {
+            if (c == null) {
                 this.result = 0;
                 stmt.setInt(1, id);
                 stmt.setString(2, nom);
                 stmt.setString(3, mote);
                 stmt.setString(4, tlf);
                 stmt.setTimestamp(5, new Timestamp(new Date().getTime()));
-                stmt.setDouble(6,latitud);
-                stmt.setDouble(7,longitud);
+                stmt.setDouble(6, latitud);
+                stmt.setDouble(7, longitud);
                 stmt.executeUpdate();
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
         } finally {
             try {
@@ -134,9 +134,8 @@ public class BD implements Runnable {
         }
     }
 
-    protected void addRegistrePunts(int idclient, boolean operacio, int punts, double longitud, double latitud){
+    protected void addRegistrePunts(int idclient, boolean operacio, int punts, double longitud, double latitud) {
         java.sql.PreparedStatement stmt = null;
-        java.sql.PreparedStatement stmt2;
         java.sql.PreparedStatement stmt3;
         this.result = 1;
         int id = 0;
@@ -144,29 +143,24 @@ public class BD implements Runnable {
         Client c = null;
         try {
             stmt = conexionMySQL.prepareCall("INSERT INTO registre_punts (id, idclient, operacio, punts, registro, latitud, longitud) VALUES (?,?,?,?,?,?,?)");
-            stmt2 = conexionMySQL.prepareCall("SELECT * FROM clients WHERE id=?");
-            stmt3 = conexionMySQL.prepareCall("SELECT MAX( id )  FROM registre_punts");
-            stmt2.setInt(1, idclient);
-            rs = stmt2.executeQuery();
-            while (rs.next()) {
-                c = new Client();
-            }
-            if(c==null) {
-                rs = stmt3.executeQuery();
-                while(rs.next()){
+            stmt3 = conexionMySQL.prepareCall("SELECT *  FROM registre_punts");
+            rs = stmt3.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
                     id = rs.getInt("id") + 1;
                 }
-                this.result = 0;
-                stmt.setInt(1, id);
-                stmt.setInt(2, idclient);
-                stmt.setBoolean(3, operacio);
-                stmt.setInt(4, punts);
-                stmt.setTimestamp(5, new Timestamp(new Date().getTime()));
-                stmt.setDouble(6,latitud);
-                stmt.setDouble(7,longitud);
-                stmt.executeUpdate();
             }
-        }catch (SQLException e){
+            this.result = 0;
+            stmt.setInt(1, id);
+            stmt.setInt(2, idclient);
+            stmt.setBoolean(3, operacio);
+            stmt.setInt(4, punts);
+            stmt.setTimestamp(5, new Timestamp(new Date().getTime()));
+            stmt.setDouble(6, latitud);
+            stmt.setDouble(7, longitud);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
             System.out.println(e);
         } finally {
             try {
@@ -186,7 +180,7 @@ public class BD implements Runnable {
         ResultSet rs = null;
         try {
             stmt = this.conexionMySQL.prepareStatement("SELECT * FROM registre_punts WHERE idclient = ?");
-            stmt.setInt(1,id);
+            stmt.setInt(1, id);
             rs = stmt.executeQuery();
             while (rs.next()) {
                 punts = new Punts();
@@ -216,7 +210,7 @@ public class BD implements Runnable {
 
     }
 
-    protected void modCliente(int id, String nom, String mote, String tlf, int pts){
+    protected void modCliente(int id, String nom, String mote, String tlf, int pts) {
         java.sql.PreparedStatement stmt = null;
         java.sql.PreparedStatement stmt2;
         this.result = 1;
@@ -230,7 +224,7 @@ public class BD implements Runnable {
             while (rs.next()) {
                 c = new Client();
             }
-            if(c!=null) {
+            if (c != null) {
                 this.result = 0;
                 stmt.setString(1, nom);
                 stmt.setString(2, mote);
@@ -238,10 +232,10 @@ public class BD implements Runnable {
                 stmt.setInt(4, pts);
                 stmt.setInt(5, id);
                 stmt.executeUpdate();
-            }else{
+            } else {
                 System.out.println("No se ha encontrado el cliente...");
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
         } finally {
             try {
@@ -258,7 +252,7 @@ public class BD implements Runnable {
         return conexionMySQL;
     }
 
-    protected void delCliente(int id){
+    protected void delCliente(int id) {
         java.sql.PreparedStatement stmt = null;
         java.sql.PreparedStatement stmt2;
         this.result = 1;
@@ -272,14 +266,14 @@ public class BD implements Runnable {
             while (rs.next()) {
                 c = new Client();
             }
-            if(c!=null) {
+            if (c != null) {
                 this.result = 0;
                 stmt.setInt(1, id);
                 stmt.executeUpdate();
-            }else{
+            } else {
                 System.out.println("No se ha encontrado el cliente...");
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
         } finally {
             try {
@@ -293,39 +287,39 @@ public class BD implements Runnable {
     }
 
     protected void getClientes() {
-            this.clientes = new ArrayList<>();
-            java.sql.PreparedStatement stmt = null;
-            Client client;
-            ResultSet rs = null;
-            try {
-                stmt = this.conexionMySQL.prepareStatement("SELECT * FROM clients");
-                rs = stmt.executeQuery();
-                while (rs.next()) {
-                    client = new Client();
-                    client.setId(rs.getInt("id"));
-                    client.setNombre(rs.getString("nombre"));
-                    client.setMote(rs.getString("mote"));
-                    client.setTelefono(rs.getString("telefono"));
-                    client.setPunts(rs.getInt("punts"));
-                    client.setRegistro(rs.getTimestamp("registro"));
-                    client.setLongitud(rs.getDouble("longitud"));
-                    client.setLatitud(rs.getDouble("latitud"));
-                    this.clientes.add(client);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (rs != null) {
-                        rs.close();
-                    }
-                    if (stmt != null) {
-                        stmt.close();
-                    }
-                } catch (SQLException ex) {
-                    System.out.println("Error al cerrar la conexión...");
-                }
+        this.clientes = new ArrayList<>();
+        java.sql.PreparedStatement stmt = null;
+        Client client;
+        ResultSet rs = null;
+        try {
+            stmt = this.conexionMySQL.prepareStatement("SELECT * FROM clients");
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                client = new Client();
+                client.setId(rs.getInt("id"));
+                client.setNombre(rs.getString("nombre"));
+                client.setMote(rs.getString("mote"));
+                client.setTelefono(rs.getString("telefono"));
+                client.setPunts(rs.getInt("punts"));
+                client.setRegistro(rs.getTimestamp("registro"));
+                client.setLongitud(rs.getDouble("longitud"));
+                client.setLatitud(rs.getDouble("latitud"));
+                this.clientes.add(client);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Error al cerrar la conexión...");
+            }
+        }
 
     }
 

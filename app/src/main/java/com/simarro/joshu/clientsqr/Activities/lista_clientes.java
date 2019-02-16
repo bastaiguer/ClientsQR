@@ -91,10 +91,6 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
             case R.id.ordenar_por_puntos:
                 ordenarPorPuntos();
                 break;
-            case R.id.graficos:
-                intent = new Intent(this, panel_control.class);
-                startActivity(intent);
-                break;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:key="canjeo"
+        android:title="Nº por canjeo"
+        android:summary="Introduzca el nº de puntos que vale un cupón"
+        android:defaultValue="100"
+        android:numeric="integer"
+        android:dialogTitle="Nº por canjeo"
+        android:entries="@array/punts"
+        android:entryValues="@array/punts"/>
+</PreferenceScreen>

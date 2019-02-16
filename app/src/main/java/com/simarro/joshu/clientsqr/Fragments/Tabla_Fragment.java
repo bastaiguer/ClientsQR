@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.R;
 
 /**
@@ -20,6 +21,8 @@ import com.simarro.joshu.clientsqr.R;
  */
 public class Tabla_Fragment extends Fragment {
 
+    private Client client;
+
     public Tabla_Fragment() {
     }
 
@@ -28,9 +31,10 @@ public class Tabla_Fragment extends Fragment {
      * this fragment using the provided parameters.
      * @return A new instance of fragment Tabla_Fragment.
      */
-    public static Tabla_Fragment newInstance() {
+    public static Tabla_Fragment newInstance(Client c) {
         Tabla_Fragment fragment = new Tabla_Fragment();
         Bundle args = new Bundle();
+        args.putSerializable("client",c);
         fragment.setArguments(args);
         fragment.setRetainInstance(true);
         return fragment;
@@ -39,7 +43,7 @@ public class Tabla_Fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        client = (Client) getArguments().getSerializable("client");
     }
 
     @Override

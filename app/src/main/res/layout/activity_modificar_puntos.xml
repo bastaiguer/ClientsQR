@@ -43,12 +43,13 @@
 
     <TextView
         android:id="@+id/txt_codigo_cliente"
-        android:layout_width="0dp"
+        android:layout_width="226dp"
         android:layout_height="0dp"
+        android:layout_marginTop="32dp"
         android:text="Código Cliente"
         android:textAlignment="center"
         android:textColor="@color/txt"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/guideline15"
         app:layout_constraintEnd_toStartOf="@+id/guideline16"
@@ -99,10 +100,11 @@
         android:id="@+id/txt_num_puntos_sumar"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="32dp"
         android:text="Nº puntos a sumar"
         android:textAlignment="center"
         android:textColor="@color/txt"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/guideline18"
         app:layout_constraintEnd_toStartOf="@+id/guideline16"
@@ -131,4 +133,34 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.32" />
+
+    <ImageView
+        android:id="@+id/img_gps_ok"
+        android:layout_width="0dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline17"
+        app:layout_constraintTop_toTopOf="@+id/guideline5"
+        app:srcCompat="@drawable/gps_ok" />
+
+    <ProgressBar
+        android:id="@+id/progress_buscando"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline17"
+        app:layout_constraintTop_toBottomOf="@+id/img_gps_ok" />
 </android.support.constraint.ConstraintLayout>
