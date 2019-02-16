@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.R;
@@ -19,7 +18,7 @@ public class adapterListClients extends ArrayAdapter<Client> {
     }
 
     public adapterListClients(ArrayList<Client> data, Context context){
-        super(context, R.layout.element_llista, data);
+        super(context, R.layout.element_llista_clients, data);
     }
 
     @Override
@@ -33,7 +32,7 @@ public class adapterListClients extends ArrayAdapter<Client> {
         if(convertView == null){
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.element_llista,parent,false);
+            convertView = inflater.inflate(R.layout.element_llista_clients,parent,false);
             viewHolder.id = convertView.findViewById(R.id.txt_id);
             viewHolder.nom = convertView.findViewById(R.id.txt_nom);
             viewHolder.mote = convertView.findViewById(R.id.txt_mote);

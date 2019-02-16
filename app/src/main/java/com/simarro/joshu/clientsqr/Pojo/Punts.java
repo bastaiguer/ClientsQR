@@ -22,6 +22,8 @@ public class Punts implements Serializable {
         this.longitud = longitud;
     }
 
+
+
     public int getId() {
         return id;
     }

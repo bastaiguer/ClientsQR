@@ -8,4 +8,6 @@
     <color name="altre">#B8CDFF</color>
     <color name="txt">#08225e</color>
     <color name="bar">#E7E8EB</color>
+    <color name="mas">#4CAF50</color>
+    <color name="menos">#F44336</color>
 </resources>
