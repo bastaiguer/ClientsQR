@@ -42,6 +42,8 @@ public class Tabla_Fragment extends Fragment implements View.OnClickListener {
     private SimpleDateFormat sdf, sdf2;
     private adapterListPunts adapter;
     private ListView listaPuntos;
+    private TextView num_punts;
+    private int suma, resta;
 
     public Tabla_Fragment() {
     }
@@ -104,6 +106,7 @@ public class Tabla_Fragment extends Fragment implements View.OnClickListener {
         semana = rootView.findViewById(R.id.btn_semana);
         mes = rootView.findViewById(R.id.btn_mes);
         todo = rootView.findViewById(R.id.btn_todo);
+        num_punts = rootView.findViewById(R.id.txt_num_punts);
         hoy.setOnClickListener(this);
         semana.setOnClickListener(this);
         mes.setOnClickListener(this);
@@ -114,7 +117,31 @@ public class Tabla_Fragment extends Fragment implements View.OnClickListener {
         registro.setText(sdf.format(client.getRegistro()));
         listaPuntos = rootView.findViewById(R.id.listView_punts);
         listaPuntos.setAdapter(adapter);
+        edited = this.punts;
+        if(this.edited.size() > 0){
+            num_punts.setText("Total +"+sumaPunts()+"  -"+restaPunts());
+        }
         return rootView;
+    }
+
+    public int sumaPunts(){
+        int numPunts = 0;
+        for(Punts p: this.edited){
+            if(p.isOperacio()){
+                numPunts += p.getPunts();
+            }
+        }
+        return numPunts;
+    }
+
+    public int restaPunts(){
+        int numPunts = 0;
+        for(Punts p: this.edited){
+            if(!p.isOperacio()){
+                numPunts += p.getPunts();
+            }
+        }
+        return numPunts;
     }
 
     @Override
@@ -136,6 +163,11 @@ public class Tabla_Fragment extends Fragment implements View.OnClickListener {
                 }
                 adapter = new adapterListPunts(this.edited, getContext());
                 listaPuntos.setAdapter(adapter);
+                if(this.edited.size() > 0){
+                    num_punts.setText("Total +"+sumaPunts()+"  -"+restaPunts());
+                }else{
+                    num_punts.setText("No se registraron puntos");
+                }
                 break;
             case R.id.btn_semana:
                 for (Punts p : punts) {
@@ -151,6 +183,11 @@ public class Tabla_Fragment extends Fragment implements View.OnClickListener {
                 }
                 adapter = new adapterListPunts(this.edited, getContext());
                 listaPuntos.setAdapter(adapter);
+                if(this.edited.size() > 0){
+                    num_punts.setText("Total +"+sumaPunts()+"  -"+restaPunts());
+                }else{
+                    num_punts.setText("No se registraron puntos");
+                }
                 break;
             case R.id.btn_mes:
                 for (Punts p : punts) {
@@ -160,11 +197,21 @@ public class Tabla_Fragment extends Fragment implements View.OnClickListener {
                 }
                 adapter = new adapterListPunts(this.edited, getContext());
                 listaPuntos.setAdapter(adapter);
+                if(this.edited.size() > 0){
+                    num_punts.setText("Total +"+sumaPunts()+"  -"+restaPunts());
+                }else{
+                    num_punts.setText("No se registraron puntos");
+                }
                 break;
             case R.id.btn_todo:
                 edited = punts;
                 adapter = new adapterListPunts(this.edited, getContext());
                 listaPuntos.setAdapter(adapter);
+                if(this.edited.size() > 0){
+                    num_punts.setText("Total +"+sumaPunts()+"  -"+restaPunts());
+                }else{
+                    num_punts.setText("No se registraron puntos");
+                }
                 break;
         }
     }

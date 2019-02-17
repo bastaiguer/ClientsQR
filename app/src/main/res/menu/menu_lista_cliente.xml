@@ -16,12 +16,6 @@
         android:title="Difusion"
         app:showAsAction="always" />
     <item
-        android:id="@+id/graficos"
-        android:icon="@drawable/selector_graficos"
-        android:orderInCategory="3"
-        android:title="Graficos"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/ordenar_por_puntos"
         android:icon="@drawable/puntos"
         android:orderInCategory="4"

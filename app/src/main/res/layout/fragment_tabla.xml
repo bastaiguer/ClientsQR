@@ -250,7 +250,7 @@
         app:layout_constraintGuide_percent="0.47" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/txt_num_punts"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="No se registraron puntos"

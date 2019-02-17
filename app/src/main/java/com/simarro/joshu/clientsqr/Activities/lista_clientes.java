@@ -28,6 +28,7 @@ import java.util.Comparator;
 public class lista_clientes extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private LlistaClients clients = new LlistaClients();
+    private ArrayList<Client> edited = new ArrayList<>();
     private ListView llista;
     private Toolbar toolbar;
     private adapterListClients adapter;
@@ -69,8 +70,9 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
         }
         //Obtenemos la lista de los clientes en la BBDD
         this.clients.addLlista(bd.obClients());
-        if (this.clients.size() > 0) {
-            adapter = new adapterListClients(clients.getClients(), this.getApplicationContext());
+        edited = clients.getClients();
+        if (this.edited.size() > 0) {
+            adapter = new adapterListClients(edited, this.getApplicationContext());
             llista.setAdapter(adapter);
             llista.setOnItemClickListener(this);
         } else {
@@ -115,7 +117,8 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
                 }
             }
         }
-        adapter = new adapterListClients(c2, getApplicationContext());
+        edited = c2;
+        adapter = new adapterListClients(edited, getApplicationContext());
         llista.setAdapter(adapter);
     }
 
@@ -133,7 +136,8 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
                         llistaBusqueda.add(c);
                     }
                 }
-                adapter = new adapterListClients(llistaBusqueda, getApplicationContext());
+                edited = llistaBusqueda.getClients();
+                adapter = new adapterListClients(edited, getApplicationContext());
                 llista.setAdapter(adapter);
                 return false;
             }
@@ -146,7 +150,8 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
                         llistaBusqueda.add(c);
                     }
                 }
-                adapter = new adapterListClients(llistaBusqueda, getApplicationContext());
+                edited = llistaBusqueda.getClients();
+                adapter = new adapterListClients(edited, getApplicationContext());
                 llista.setAdapter(adapter);
                 return false;
             }
@@ -157,14 +162,14 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (!dialeg2.isAdded()) {
-            dialeg = DialogoLlamada.newInstance(clients.get(position));
+            dialeg = DialogoLlamada.newInstance(edited.get(position));
             dialeg.show(getSupportFragmentManager(), "dialegCridada");
         }
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        dialeg2 = DialogoOpcionesClient.newInstance(clients.get(position));
+        dialeg2 = DialogoOpcionesClient.newInstance(edited.get(position));
         dialeg2.show(getSupportFragmentManager(), "dialegModDel");
         return false;
     }
