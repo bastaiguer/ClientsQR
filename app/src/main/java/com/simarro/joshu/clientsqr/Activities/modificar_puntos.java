@@ -54,14 +54,14 @@ public class modificar_puntos extends AppCompatActivity implements View.OnClickL
         canjeo = Integer.parseInt(preferencies.getString("canjeo", "100"));
         numPunts.setText(qr);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{
                                 Manifest.permission.ACCESS_FINE_LOCATION,
                                 Manifest.permission.ACCESS_COARSE_LOCATION},
                         123);
             } else {
-                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                 locationListener = new LocationListener() {
                     @Override
                     public void onLocationChanged(Location location) {
@@ -92,7 +92,7 @@ public class modificar_puntos extends AppCompatActivity implements View.OnClickL
 
                     }
                 };
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 0, locationListener);
             }
         } else {
             Toast.makeText(this, "Deshabilitado Network Ubication Service", Toast.LENGTH_SHORT).show();

@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.simarro.joshu.clientsqr.BBDD.BD;
@@ -32,8 +34,11 @@ public class add_client extends AppCompatActivity implements View.OnClickListene
     private int id;
     private LocationManager locationManager;
     private static Location location;
+    private int mostrarMsg = 0;
     private LocationListener locationListener;
     private double longitud, latitud;
+    private ImageView gps_ok;
+    private ProgressBar buscando;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +48,11 @@ public class add_client extends AppCompatActivity implements View.OnClickListene
         id = Integer.parseInt(getIntent().getExtras().getString("qr"));
         mote = findViewById(R.id.ed_mote_add);
         tlf = findViewById(R.id.ed_tlf_add);
+        buscando = findViewById(R.id.progress_buscando_add);
+        gps_ok = findViewById(R.id.img_gps_ok_add);
         registrar = findViewById(R.id.btn_registrar);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[] {
                                 Manifest.permission.ACCESS_FINE_LOCATION,
@@ -54,12 +61,17 @@ public class add_client extends AppCompatActivity implements View.OnClickListene
 
                 Toast.makeText(this,"Acceso a la ubicación no permitido...",Toast.LENGTH_SHORT).show();
             }else{
-                Toast.makeText(this,latitud+" - "+longitud,Toast.LENGTH_SHORT).show();
                 locationListener = new LocationListener() {
                     @Override
                     public void onLocationChanged(Location location) {
                         longitud = location.getLongitude();
                         latitud = location.getLatitude();
+                        if(mostrarMsg == 0){
+                            Toast.makeText(getApplicationContext(), "Geolocalización Obtenida", Toast.LENGTH_SHORT).show();
+                            buscando.setVisibility(View.INVISIBLE);
+                            gps_ok.setVisibility(View.VISIBLE);
+                            mostrarMsg = 1;
+                        }
                     }
 
                     @Override
@@ -79,7 +91,7 @@ public class add_client extends AppCompatActivity implements View.OnClickListene
 
                     }
                 };
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 0, locationListener);
             }
         }else{
             Toast.makeText(this,"Deshabilitado Network Ubication Service",Toast.LENGTH_SHORT).show();
