@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.simarro.joshu.clientsqr.BBDD.BD;
 import com.simarro.joshu.clientsqr.Pojo.LlistaClients;
 import com.simarro.joshu.clientsqr.R;
+import com.simarro.joshu.clientsqr.Resources.DialogoInfo;
 
 import java.util.Objects;
 
@@ -178,7 +179,8 @@ public class modificar_puntos extends AppCompatActivity implements View.OnClickL
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    Toast.makeText(this, "El cliente Nº" + qr + " tiene " + addPunts + " puntos!", Toast.LENGTH_SHORT).show();
+                    DialogoInfo dialeg = DialogoInfo.newInstance("El cliente Nº" + qr + " tiene " + addPunts + " puntos!");
+                    dialeg.show(getSupportFragmentManager(),"dialegModPunts");
                     break;
                 case R.id.btn_canjear_por_cupon:
                     if (mostrarpunts >= canjeo) {
@@ -227,9 +229,12 @@ public class modificar_puntos extends AppCompatActivity implements View.OnClickL
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        Toast.makeText(this, "El cliente Nº" + qr + " tiene " + addPunts + " puntos!", Toast.LENGTH_SHORT).show();
+
+                        DialogoInfo dialeg2 = DialogoInfo.newInstance("El cliente Nº" + qr + " tiene " + addPunts + " puntos!");
+                        dialeg2.show(getSupportFragmentManager(),"dialegModPunts2");
                     } else {
-                        Toast.makeText(this, "No tiene suficientes puntos", Toast.LENGTH_SHORT).show();
+                        DialogoInfo dialeg3 = DialogoInfo.newInstance("No tienes suficientes puntos...");
+                        dialeg3.show(getSupportFragmentManager(),"dialegModPunts3");
                     }
                     break;
             }

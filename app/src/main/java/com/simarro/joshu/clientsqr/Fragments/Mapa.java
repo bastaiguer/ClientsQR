@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -19,6 +21,7 @@ import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.Pojo.Punts;
 import com.simarro.joshu.clientsqr.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -28,10 +31,11 @@ import java.util.ArrayList;
  * Use the {@link Mapa#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Mapa extends Fragment implements  OnMapReadyCallback{
+public class Mapa extends Fragment implements OnMapReadyCallback {
 
     private Client client;
     private ArrayList<Punts> punts = new ArrayList<>();
+    private MapView mapa;
 
     public Mapa() {
         // Required empty public constructor
@@ -41,7 +45,7 @@ public class Mapa extends Fragment implements  OnMapReadyCallback{
     public static Mapa newInstance(Client c) {
         Mapa fragment = new Mapa();
         Bundle args = new Bundle();
-        args.putSerializable("client",c);
+        args.putSerializable("client", c);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,12 +78,6 @@ public class Mapa extends Fragment implements  OnMapReadyCallback{
             e.printStackTrace();
         }
         this.punts = bd.obPunts();
-        SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.mapa);
-        if (mapFragment == null) {
-            Toast.makeText(getContext(), "No se ha podido cargar el mapa", Toast.LENGTH_SHORT).show();
-        } else {
-            mapFragment.getMapAsync(this);
-        }
     }
 
     @Override
@@ -87,14 +85,64 @@ public class Mapa extends Fragment implements  OnMapReadyCallback{
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_mapa, container, false);
         rootView.setBackgroundColor(getResources().getColor(R.color.bar));
+
+        mapa = (MapView) rootView.findViewById(R.id.mapa);
+        mapa.onCreate(savedInstanceState);
+        mapa.onResume();
+
+        MapsInitializer.initialize(getActivity().getApplicationContext());
+
+        mapa.getMapAsync(this);
+
+        /*SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.mapa);
+        if (mapFragment == null) {
+            Toast.makeText(getContext(), "No se ha podido cargar el mapa", Toast.LENGTH_SHORT).show();
+        } else {
+            mapFragment.getMapAsync(this);
+        }*/
+
         return rootView;
+    }
+
+    private double[] calcMediaLatLong() {
+        double[] res = new double[2];
+        double medLats = 38.9674887, medLongs = -0.5862496;
+        if (this.punts.size() > 0) {
+            medLats = 0;
+            medLongs = 0;
+            for (Punts p : this.punts) {
+                medLats += p.getLatitud();
+                medLongs += p.getLongitud();
+            }
+            medLats = medLats / this.punts.size();
+            medLongs = medLongs / this.punts.size();
+        }
+        res[0] = medLats;
+        res[1] = medLongs;
+        return res;
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng sydney = new LatLng(-33.852, 151.211);
-        googleMap.addMarker(new MarkerOptions().position(sydney)
-                .title("Marker in Sydney"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng aux;
+        String asPunts;
+        double[] media = new double[2];
+        for (Punts p : this.punts) {
+            aux = new LatLng(p.getLatitud(), p.getLongitud());
+            if (p.isOperacio()) {
+                asPunts = "+" + p.getPunts() + " " + p.getRegistro();
+            } else {
+                asPunts = "-" + p.getPunts() + " " + p.getRegistro();
+            }
+            googleMap.addMarker(new MarkerOptions().position(aux).title(asPunts));
+        }
+        media = calcMediaLatLong();
+        aux = new LatLng(media[0], media[1]);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(aux));
+        if (this.punts.size() > 0) {
+            googleMap.setMinZoomPreference(15);
+        } else {
+            googleMap.setMinZoomPreference(14);
+        }
     }
 }

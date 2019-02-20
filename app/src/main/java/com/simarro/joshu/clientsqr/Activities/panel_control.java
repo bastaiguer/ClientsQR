@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -44,12 +45,14 @@ public class panel_control extends FragmentActivity implements View.OnClickListe
         MyFragmentPagerAdapter pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         pagerAdapter.addFragment(Tabla_Fragment.newInstance(client));
         pagerAdapter.addFragment(Mapa.newInstance(client));
+
         this.pager.setAdapter(pagerAdapter);
         tabsTitulos = findViewById(R.id.tabLayout_titulos);
         tabsTitulos.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabsTitulos.setupWithViewPager(pager);
         preferencias = findViewById(R.id.btn_preferencias);
         preferencias.setOnClickListener(this);
+
     }
 
 

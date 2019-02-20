@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragments;
-    private String titulos[] = new String[]{"Gráficos","Mapa"};
+    private String titulos[] = new String[]{"Puntos","Mapa"};
 
     public MyFragmentPagerAdapter(FragmentManager fm) {
 

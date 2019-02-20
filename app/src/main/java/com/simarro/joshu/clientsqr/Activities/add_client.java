@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.simarro.joshu.clientsqr.BBDD.BD;
 import com.simarro.joshu.clientsqr.R;
+import com.simarro.joshu.clientsqr.Resources.DialogoInfo;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -130,10 +131,16 @@ public class add_client extends AppCompatActivity implements View.OnClickListene
                 e.printStackTrace();
             }
             if(bd.getResult() == 0){
-                Toast.makeText(this, "El cliente " + id + " con nombre " + txt_nom + " ha sido registrado correctamente", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "El cliente " + id + " con nombre " + txt_nom + " ha sido registrado correctamente", Toast.LENGTH_LONG).show();
 
             }else{
-                Toast.makeText(this, "El cliente " + id + " ya está registrado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "El cliente " + id + " ya está registrado", Toast.LENGTH_LONG).show();
+
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
             Intent intent = new Intent(this,DashBoard.class);
             startActivity(intent);
