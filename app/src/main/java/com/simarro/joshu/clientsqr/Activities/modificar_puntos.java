@@ -242,7 +242,7 @@ public class modificar_puntos extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroy() { //Utilizado para que al destruirse vaya al dashboard directamente
         super.onDestroy();
         Intent intent = new Intent(this, DashBoard.class);
         startActivity(intent);
