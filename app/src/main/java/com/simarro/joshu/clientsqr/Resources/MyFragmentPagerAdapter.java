@@ -16,7 +16,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
         super(fm);
 
-        this.fragments = new ArrayList<Fragment>();
+        this.fragments = new ArrayList<>();
 
     }
 

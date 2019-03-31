@@ -1,5 +1,7 @@
 package com.simarro.joshu.clientsqr.Fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -21,6 +23,9 @@ import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.Pojo.Punts;
 import com.simarro.joshu.clientsqr.R;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -36,6 +41,7 @@ public class Mapa extends Fragment implements OnMapReadyCallback {
     private Client client;
     private ArrayList<Punts> punts = new ArrayList<>();
     private MapView mapa;
+    private EventBus bus = EventBus.getDefault();
 
     public Mapa() {
         // Required empty public constructor
@@ -78,6 +84,7 @@ public class Mapa extends Fragment implements OnMapReadyCallback {
             e.printStackTrace();
         }
         this.punts = bd.obPunts();
+
     }
 
     @Override
@@ -87,12 +94,7 @@ public class Mapa extends Fragment implements OnMapReadyCallback {
         rootView.setBackgroundColor(getResources().getColor(R.color.bar));
 
         mapa = (MapView) rootView.findViewById(R.id.mapa);
-        mapa.onCreate(savedInstanceState);
-        mapa.onResume();
-
-        MapsInitializer.initialize(getActivity().getApplicationContext());
-
-        mapa.getMapAsync(this);
+        this.cargarMapa();
 
         /*SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.mapa);
         if (mapFragment == null) {
@@ -102,6 +104,15 @@ public class Mapa extends Fragment implements OnMapReadyCallback {
         }*/
 
         return rootView;
+    }
+
+    public void cargarMapa(){
+        mapa.onCreate(getArguments());
+        mapa.onResume();
+
+        MapsInitializer.initialize(getActivity().getApplicationContext());
+
+        mapa.getMapAsync(this);
     }
 
     private double[] calcMediaLatLong() {
@@ -144,5 +155,24 @@ public class Mapa extends Fragment implements OnMapReadyCallback {
         } else {
             googleMap.setMinZoomPreference(14);
         }
+        Toast.makeText(getContext(),"onMapReady",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.bus.register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        this.bus.unregister(this);
+    }
+
+    @Subscribe
+    public void ejecutarLlamada(ArrayList<Punts> pts){
+        this.punts = pts;
+        this.cargarMapa();
     }
 }

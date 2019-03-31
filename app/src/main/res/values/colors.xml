@@ -10,4 +10,9 @@
     <color name="bar">#E7E8EB</color>
     <color name="mas">#4CAF50</color>
     <color name="menos">#F44336</color>
+    <color name="normal">#9F6936F4</color>
+    <color name="espontani">#9F2C4CEC</color>
+    <color name="habitual">#9F45ECE7</color>
+    <color name="bon">#9F36F49B</color>
+    <color name="moltbo">#C478F436</color>
 </resources>

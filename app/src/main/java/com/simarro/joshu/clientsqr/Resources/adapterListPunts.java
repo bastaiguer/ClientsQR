@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class adapterListPunts extends ArrayAdapter<Punts> {
     private static class ViewHolder{
-        TextView id, punts, fecha, hora;
+        TextView punts, fecha, hora;
     }
 
     public adapterListPunts(ArrayList<Punts> data, Context context){
@@ -40,7 +40,6 @@ public class adapterListPunts extends ArrayAdapter<Punts> {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.element_llista_punts,parent,false);
-            viewHolder.id = convertView.findViewById(R.id.txt_id_punto_mostrar);
             viewHolder.punts = convertView.findViewById(R.id.txt_puntos_punto_mostrar);
             viewHolder.fecha = convertView.findViewById(R.id.txt_fecha_punto_mostrar);
             viewHolder.hora = convertView.findViewById(R.id.txt_hora_punto_mostrar);
@@ -57,7 +56,6 @@ public class adapterListPunts extends ArrayAdapter<Punts> {
             op = "-";
             viewHolder.punts.setTextColor(result.getResources().getColor(R.color.menos));
         }
-        viewHolder.id.setText(""+p.getId());
         viewHolder.punts.setText(op+p.getPunts());
         viewHolder.fecha.setText(sdf.format(p.getRegistro()));
         viewHolder.hora.setText(sdf2.format(p.getRegistro()));

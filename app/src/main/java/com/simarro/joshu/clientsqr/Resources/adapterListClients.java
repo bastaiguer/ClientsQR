@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class adapterListClients extends ArrayAdapter<Client> {
     private static class ViewHolder{
-        TextView id, nom, mote, tlf, punts;
+        TextView id, nom, tlf, punts;
     }
 
     public adapterListClients(ArrayList<Client> data, Context context){
@@ -33,9 +33,7 @@ public class adapterListClients extends ArrayAdapter<Client> {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.element_llista_clients,parent,false);
-            viewHolder.id = convertView.findViewById(R.id.txt_id);
             viewHolder.nom = convertView.findViewById(R.id.txt_nom);
-            viewHolder.mote = convertView.findViewById(R.id.txt_mote);
             viewHolder.tlf = convertView.findViewById(R.id.txt_telefono);
             viewHolder.punts = convertView.findViewById(R.id.txt_punts);
             convertView.setTag(viewHolder);
@@ -45,11 +43,20 @@ public class adapterListClients extends ArrayAdapter<Client> {
             result = convertView;
         }
 
-        viewHolder.id.setText(""+cl.getId());
         viewHolder.nom.setText(cl.getNombre());
-        viewHolder.mote.setText(cl.getMote());
         viewHolder.tlf.setText(cl.getTelefono());
         viewHolder.punts.setText(""+cl.getPunts());
+        if(cl.getPunts() >= 200){
+            viewHolder.punts.setTextColor(result.getResources().getColor(R.color.moltbo));
+        }else if(cl.getPunts() >= 100){
+            viewHolder.punts.setTextColor(result.getResources().getColor(R.color.bon));
+        }else if(cl.getPunts() >= 75){
+            viewHolder.punts.setTextColor(result.getResources().getColor(R.color.habitual));
+        }else if(cl.getPunts() >= 30){
+            viewHolder.punts.setTextColor(result.getResources().getColor(R.color.espontani));
+        }else{
+            viewHolder.punts.setTextColor(result.getResources().getColor(R.color.normal));
+        }
 
         return result;
     }

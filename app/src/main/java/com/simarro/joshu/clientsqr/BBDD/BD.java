@@ -55,7 +55,7 @@ public class BD implements Runnable {
     protected void conectarBDMySQL() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String urlOdbc = "jdbc:mysql://81.202.185.179:6767/clientsqr";
+            String urlOdbc = "jdbc:mysql://81.202.189.17:6767/clientsqr";
             conexionMySQL = (DriverManager.getConnection(urlOdbc, "picanya", "picanya"));
             if (!conexionMySQL.isClosed()) {
                 System.out.println("Conexión establecida");

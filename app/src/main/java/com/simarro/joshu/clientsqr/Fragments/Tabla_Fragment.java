@@ -1,6 +1,7 @@
 package com.simarro.joshu.clientsqr.Fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.Pojo.Punts;
 import com.simarro.joshu.clientsqr.R;
 import com.simarro.joshu.clientsqr.Resources.adapterListPunts;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,9 +46,10 @@ public class Tabla_Fragment extends Fragment implements View.OnClickListener {
     private adapterListPunts adapter;
     private ListView listaPuntos;
     private TextView num_punts;
-    private int suma, resta;
+    private EventBus bus = EventBus.getDefault();
 
     public Tabla_Fragment() {
+
     }
 
     /**
@@ -92,7 +96,6 @@ public class Tabla_Fragment extends Fragment implements View.OnClickListener {
         }
         this.punts = bd.obPunts();
         adapter = new adapterListPunts(this.punts, getContext());
-
     }
 
     @Override
@@ -214,5 +217,6 @@ public class Tabla_Fragment extends Fragment implements View.OnClickListener {
                 }
                 break;
         }
+        bus.post(this.edited);
     }
 }
