@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/separador"
+    android:orientation="vertical"
+    tools:context=".Activities.DashBoard">
+    <LinearLayout
+        android:id="@+id/ll3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        tools:context=".Activities.DashBoard">
+
+        <ImageButton
+            android:id="@+id/btn_clientes"
+            style="@style/Estilo_app"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@drawable/selector_menu"
+            android:foreground="@drawable/lista"
+            android:foregroundGravity="center"
+            android:onClick="onClick" />
+
+        <ImageButton
+            android:id="@+id/btn_add_user"
+            style="@style/Estilo_app"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@drawable/selector_menu"
+            android:foreground="@drawable/report"
+            android:foregroundGravity="center"
+            android:onClick="onClick" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        tools:context=".Activities.DashBoard">
+
+        <ImageButton
+            android:id="@+id/btn_leer_qr"
+            style="@style/Estilo_app"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@drawable/selector_menu"
+            android:foreground="@drawable/qr"
+            android:foregroundGravity="center"
+            android:onClick="onClick" />
+    </LinearLayout>
+</LinearLayout>

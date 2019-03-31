@@ -2,23 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/ordenar_por_puntos"
+        android:icon="@drawable/selector_ordenamiento"
+        android:orderInCategory="4"
+        android:title="Ordenar por puntos"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/app_bar_search"
         android:icon="@drawable/ic_search_black_24dp"
         android:orderInCategory="1"
         android:title="Search"
         android:visible="true"
         app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/whatsapp"
-        android:icon="@drawable/selector_whats"
-        android:orderInCategory="2"
-        android:title="Difusion"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/ordenar_por_puntos"
-        android:icon="@drawable/puntos"
-        android:orderInCategory="4"
-        android:title="Ordenar por puntos"
         app:showAsAction="always" />
 </menu>

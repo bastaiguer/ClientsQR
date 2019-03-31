@@ -30,7 +30,7 @@ import java.util.List;
 public class add_client extends AppCompatActivity implements View.OnClickListener {
 
     private String txt_nom, txt_mote, txt_tlf;
-    private EditText nom, mote, tlf;
+    private EditText nom, tlf;
     private Button registrar;
     private int id;
     private LocationManager locationManager;
@@ -47,7 +47,6 @@ public class add_client extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_add_client);
         nom = findViewById(R.id.ed_nom_add);
         id = Integer.parseInt(getIntent().getExtras().getString("qr"));
-        mote = findViewById(R.id.ed_mote_add);
         tlf = findViewById(R.id.ed_tlf_add);
         buscando = findViewById(R.id.progress_buscando_add);
         gps_ok = findViewById(R.id.img_gps_ok_add);
@@ -104,7 +103,7 @@ public class add_client extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
         if(v.getId() == registrar.getId()){
             txt_nom = nom.getText().toString();
-            txt_mote = mote.getText().toString();
+            txt_mote = "";
             txt_tlf = tlf.getText().toString();
             //Accedemos a la BBDD mediante un Thread
             BD bd = new BD(getApplicationContext()){

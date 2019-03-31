@@ -35,6 +35,7 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
     private DialogoLlamada dialeg;
     private DialogoOpcionesClient dialeg2 = new DialogoOpcionesClient();
     private BD bd;
+    private int tipoOrden = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,12 +85,7 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
         switch (item.getItemId()) {
-            case R.id.whatsapp:
-                intent = new Intent(this, enviar_whatsapp.class);
-                startActivity(intent);
-                break;
             case R.id.ordenar_por_puntos:
                 ordenarPorPuntos();
                 break;
@@ -100,22 +96,38 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
 
     public void ordenarPorPuntos() {
         LlistaClients c = new LlistaClients(), c2 = new LlistaClients();
-        ArrayList<Integer> punts = new ArrayList<Integer>();
+        ArrayList<Integer> punts = new ArrayList<>();
         c.addLlista(bd.obClients());
         for (Client cl : c) {
             punts.add(cl.getPunts());
         }
-        Comparator<Integer> comparador = Collections.reverseOrder();
-        Collections.sort(punts, comparador);
-        for (Integer i : punts) {
-            for (int j = 0; j < c.size(); j++) {
-                if (c.get(j) != null) {
-                    if (c.get(j).getPunts() == i) {
-                        c2.add(c.get(j));
-                        c.set(j, null);
+        if(this.tipoOrden == 0) {
+            Comparator<Integer> comparador = Collections.reverseOrder();
+            Collections.sort(punts, comparador);
+            for (Integer i : punts) {
+                for (int j = 0; j < c.size(); j++) {
+                    if (c.get(j) != null) {
+                        if (c.get(j).getPunts() == i) {
+                            c2.add(c.get(j));
+                            c.set(j, null);
+                        }
                     }
                 }
             }
+            this.tipoOrden = 1;
+        }else{
+            Collections.sort(punts);
+            for (Integer i : punts) {
+                for (int j = 0; j < c.size(); j++) {
+                    if (c.get(j) != null) {
+                        if (c.get(j).getPunts() == i) {
+                            c2.add(c.get(j));
+                            c.set(j, null);
+                        }
+                    }
+                }
+            }
+            this.tipoOrden = 0;
         }
         edited = c2;
         adapter = new adapterListClients(edited, getApplicationContext());
