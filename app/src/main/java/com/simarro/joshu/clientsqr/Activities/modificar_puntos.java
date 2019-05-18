@@ -20,11 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.simarro.joshu.clientsqr.BBDD.BD;
+import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.Pojo.LlistaClients;
+import com.simarro.joshu.clientsqr.Pojo.Tenda;
 import com.simarro.joshu.clientsqr.R;
-import com.simarro.joshu.clientsqr.Resources.DialogoInfo;
-
-import java.util.Objects;
+import com.simarro.joshu.clientsqr.Resources.Dialogs.DialogoInfo;
 
 public class modificar_puntos extends AppCompatActivity implements View.OnClickListener {
 
@@ -41,12 +41,14 @@ public class modificar_puntos extends AppCompatActivity implements View.OnClickL
     private ImageView gps_ok;
     private ProgressBar buscando;
     private SharedPreferences preferencies;
+    private Tenda tenda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modificar_puntos);
         qr = getIntent().getExtras().getString("qr");
+        tenda = (Tenda) getIntent().getExtras().getSerializable("tenda");
         numPunts = findViewById(R.id.txt_num_punts);
         anyPunts = findViewById(R.id.ed_punts);
         buscando = findViewById(R.id.progress_buscando);
@@ -55,14 +57,13 @@ public class modificar_puntos extends AppCompatActivity implements View.OnClickL
         canjeo = Integer.parseInt(preferencies.getString("canjeo", "100"));
         numPunts.setText(qr);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{
                                 Manifest.permission.ACCESS_FINE_LOCATION,
                                 Manifest.permission.ACCESS_COARSE_LOCATION},
                         123);
-            } else {
-                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            }
+                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 locationListener = new LocationListener() {
                     @Override
                     public void onLocationChanged(Location location) {
@@ -94,11 +95,7 @@ public class modificar_puntos extends AppCompatActivity implements View.OnClickL
                     }
                 };
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 0, locationListener);
-            }
-        } else {
-            Toast.makeText(this, "Deshabilitado Network Ubication Service", Toast.LENGTH_SHORT).show();
 
-        }
     }
 
     @Override
@@ -112,7 +109,7 @@ public class modificar_puntos extends AppCompatActivity implements View.OnClickL
                         synchronized (this) {
                             wait(500);
                             conectarBDMySQL();
-                            getClientes();
+                            getClientes(0);
                             cerrarConexion();
                         }
                     } catch (InterruptedException e) {
@@ -183,59 +180,34 @@ public class modificar_puntos extends AppCompatActivity implements View.OnClickL
                     dialeg.show(getSupportFragmentManager(),"dialegModPunts");
                     break;
                 case R.id.btn_canjear_por_cupon:
-                    if (mostrarpunts >= canjeo) {
-                        bd = new BD(getApplicationContext()) {
-                            public void run() {
-                                try {
-                                    synchronized (this) {
-                                        wait(500);
-                                        conectarBDMySQL();
-                                        addPunts = mostrarpunts - canjeo;
-                                        modPuntos(addPunts, Integer.parseInt(qr));
-                                        cerrarConexion();
-                                    }
-                                } catch (InterruptedException e) {
-                                    Log.e("Error", "Waiting didnt work!!");
-                                    e.printStackTrace();
+                    bd = new BD(getApplicationContext()) {
+                        public void run() {
+                            try {
+                                synchronized (this) {
+                                    wait(500);
+                                    conectarBDMySQL();
+                                    getClient(Integer.parseInt(qr));
+                                    cerrarConexion();
                                 }
+                            } catch (InterruptedException e) {
+                                // TODO Auto-generated catch block
+                                Log.e("Error", "Waiting didnt work!!");
+                                e.printStackTrace();
                             }
-                        };
-                        th = new Thread(bd);
-                        th.start();
-                        try {
-                            th.join();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
                         }
-                        bd = new BD(getApplicationContext()) {
-                            public void run() {
-                                try {
-                                    synchronized (this) {
-                                        wait(500);
-                                        conectarBDMySQL();
-                                        addRegistrePunts(Integer.parseInt(qr), false, canjeo, longitud, latitud);
-                                        cerrarConexion();
-                                    }
-                                } catch (InterruptedException e) {
-                                    Log.e("Error", "Waiting didnt work!!");
-                                    e.printStackTrace();
-                                }
-                            }
-                        };
-                        th = new Thread(bd);
-                        th.start();
-                        try {
-                            th.join();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        DialogoInfo dialeg2 = DialogoInfo.newInstance("El cliente Nº" + qr + " tiene " + addPunts + " puntos!");
-                        dialeg2.show(getSupportFragmentManager(),"dialegModPunts2");
-                    } else {
-                        DialogoInfo dialeg3 = DialogoInfo.newInstance("No tienes suficientes puntos...");
-                        dialeg3.show(getSupportFragmentManager(),"dialegModPunts3");
+                    };
+                    th = new Thread(bd);
+                    th.start();
+                    try {
+                        th.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
+                    Client client = bd.getClientOb();
+                    Intent intent = new Intent(this,premios.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra("tipo",false);
+                    intent.putExtra("client",client);
+                    startActivity(intent);
                     break;
             }
         }
@@ -245,6 +217,7 @@ public class modificar_puntos extends AppCompatActivity implements View.OnClickL
     protected void onDestroy() { //Utilizado para que al destruirse vaya al dashboard directamente
         super.onDestroy();
         Intent intent = new Intent(this, DashBoard.class);
+        intent.putExtra("tenda",this.tenda);
         startActivity(intent);
     }
 }

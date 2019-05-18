@@ -17,7 +17,11 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.simarro.joshu.clientsqr.BBDD.BD;
+import com.simarro.joshu.clientsqr.Pojo.Client;
+import com.simarro.joshu.clientsqr.Pojo.Tenda;
 import com.simarro.joshu.clientsqr.R;
+import com.simarro.joshu.clientsqr.Resources.Dialogs.DialogoLogin;
 
 import java.io.IOException;
 
@@ -27,9 +31,10 @@ public class lector_qr extends AppCompatActivity {
     private CameraSource cameraSource;
     private SurfaceView cameraView;
     private final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
-    private String token = "";
+    private String token = "3";
     private String tokenanterior = "";
-    private int op;
+    private int op = 3;
+    private boolean comp = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,14 +105,89 @@ public class lector_qr extends AppCompatActivity {
                             startActivity(shareIntent);
                         }*/
                         Intent intent = new Intent();
-                        if(op == 0) {
-                            intent.setClass(lector_qr.this.getApplicationContext(), modificar_puntos.class);
+                        Tenda tenda2;
+                        if (op == 0) {
+                            intent.setClass(lector_qr.this.getApplicationContext(), modificar_puntos.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             intent.putExtra("qr", token);
-                        }else{
-                            intent.setClass(lector_qr.this.getApplicationContext(), add_client.class);
+                            tenda2 = (Tenda) getIntent().getExtras().getSerializable("tenda");
+                            intent.putExtra("tenda",tenda2);
+                            startActivity(intent);
+                        } else if (op == 1) {
+                            intent.setClass(lector_qr.this.getApplicationContext(), add_client.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             intent.putExtra("qr", token);
+                            tenda2 = (Tenda) getIntent().getExtras().getSerializable("tenda");
+                            intent.putExtra("tenda",tenda2);
+                            startActivity(intent);
+                        } else {
+                            if(comprobarTipo(token)){
+                                token = getCodigoTienda(token);
+                                BD bd = new BD(getApplicationContext()) {
+                                    public void run() {
+                                        try {
+                                            synchronized (this) {
+                                                wait(500);
+                                                conectarBDMySQL();
+                                                getTenda(Integer.parseInt(token));
+                                                cerrarConexion();
+                                            }
+                                        } catch (InterruptedException e) {
+                                            // TODO Auto-generated catch block
+                                            Log.e("Error", "Waiting didnt work!!");
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                };
+                                Thread th = new Thread(bd);
+                                th.start();
+                                try {
+                                    th.join();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                Tenda tenda = bd.getTendaOb();
+                                if (!tenda.getNombre().equals("..truco..")) {
+                                    DialogoLogin dialeg = DialogoLogin.newInstance(token, tenda,true);
+                                    dialeg.show(getSupportFragmentManager(), "dialeg");
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Tienda no registrada", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }else {
+                                BD bd = new BD(getApplicationContext()) {
+                                    public void run() {
+                                        try {
+                                            synchronized (this) {
+                                                wait(500);
+                                                conectarBDMySQL();
+                                                getClient(Integer.parseInt(token));
+                                                cerrarConexion();
+                                            }
+                                        } catch (InterruptedException e) {
+                                            // TODO Auto-generated catch block
+                                            Log.e("Error", "Waiting didnt work!!");
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                };
+                                Thread th = new Thread(bd);
+                                th.start();
+                                try {
+                                    th.join();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                Client client = bd.getClientOb();
+                                if (!client.getNombre().equals("..truco..")) {
+                                    if (client.getPass().equals("")) {
+                                        Toast.makeText(getApplicationContext(), "Introduce la contraseña que utilizarás", Toast.LENGTH_SHORT).show();
+                                    }
+                                    DialogoLogin dialeg = DialogoLogin.newInstance(token, client,false);
+                                    dialeg.show(getSupportFragmentManager(), "dialeg");
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Usuario no registrado", Toast.LENGTH_SHORT).show();
+                                }
+                            }
                         }
-                        startActivity(intent);
 
                         new Thread(new Runnable() {
                             public void run() {
@@ -132,7 +212,24 @@ public class lector_qr extends AppCompatActivity {
         });
     }
 
-    public void mostrarQR(){
-        Toast.makeText(getApplicationContext(),token,Toast.LENGTH_LONG).show();
+    public boolean comprobarTipo(String qr){
+        if(qr.substring(0,3).equals("TND")){
+            return true;
+        }else {
+            System.out.println(qr.substring(0,2)+"  <---");
+            return false;
+        }
+    }
+
+    public String getCodigoTienda(String qr){
+        String res = "";
+        for(int i = 3; i < qr.length(); i++){
+            res += qr.charAt(i);
+        }
+        return res;
+    }
+
+    public void mostrarQR() {
+        Toast.makeText(getApplicationContext(), token, Toast.LENGTH_LONG).show();
     }
 }

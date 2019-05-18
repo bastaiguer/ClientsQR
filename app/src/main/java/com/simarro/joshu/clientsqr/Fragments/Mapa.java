@@ -155,7 +155,6 @@ public class Mapa extends Fragment implements OnMapReadyCallback {
         } else {
             googleMap.setMinZoomPreference(14);
         }
-        Toast.makeText(getContext(),"onMapReady",Toast.LENGTH_SHORT).show();
     }
 
     @Override

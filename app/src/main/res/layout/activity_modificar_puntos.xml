@@ -19,12 +19,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.18" />
+        app:layout_constraintGuide_percent="0.22" />
 
     <TextView
         android:id="@+id/txt_num_punts"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
         android:textSize="30sp"
@@ -43,9 +44,9 @@
 
     <TextView
         android:id="@+id/txt_codigo_cliente"
-        android:layout_width="226dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
         android:text="Código Cliente"
         android:textAlignment="center"
         android:textColor="@color/txt"
@@ -99,19 +100,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.38" />
+        app:layout_constraintGuide_percent="0.47" />
 
     <TextView
         android:id="@+id/txt_num_puntos_sumar"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
         android:text="Nº puntos a sumar"
         android:textAlignment="center"
         android:textColor="@color/txt"
         android:textSize="24sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/guideline18"
+        app:layout_constraintBottom_toTopOf="@+id/guideline19"
         app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline15" />
@@ -119,8 +120,9 @@
     <EditText
         android:id="@+id/ed_punts"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:ems="10"
+        android:foregroundGravity="center"
         android:inputType="number"
         android:text="1"
         android:textAlignment="center"
@@ -137,7 +139,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.32" />
+        app:layout_constraintGuide_percent="0.37" />
 
     <ImageView
         android:id="@+id/img_gps_ok"

@@ -1,4 +1,4 @@
-package com.simarro.joshu.clientsqr.Resources;
+package com.simarro.joshu.clientsqr.Resources.Dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -12,17 +12,16 @@ import android.widget.TextView;
 
 import com.simarro.joshu.clientsqr.R;
 
-public class DialogoInfo extends DialogFragment {
+public class DialogoPremioVistaPrevia extends DialogFragment {
 
     private TextView info;
-    private Button llamada;
 
-    public DialogoInfo(){
+    public DialogoPremioVistaPrevia(){
 
     }
 
-    public static DialogoInfo newInstance(String txt){
-        DialogoInfo dialogo = new DialogoInfo();
+    public static DialogoPremioVistaPrevia newInstance(String txt){
+        DialogoPremioVistaPrevia dialogo = new DialogoPremioVistaPrevia();
         Bundle args = new Bundle();
         args.putString("info",txt);
         dialogo.setArguments(args);

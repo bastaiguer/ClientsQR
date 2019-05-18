@@ -6,7 +6,37 @@ import java.util.Date;
 public class Client implements Serializable {
 
     private int id, punts;
-    private String nombre, mote, telefono;
+    private String nombre;
+    private String mote;
+    private String telefono;
+    private int tienda;
+    private String imagen = "";
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public int getTienda() {
+        return tienda;
+    }
+
+    public void setTienda(int tienda) {
+        this.tienda = tienda;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    private String pass;
     private Date registro;
     private Double latitud, longitud;
 
@@ -14,12 +44,17 @@ public class Client implements Serializable {
         super();
     }
 
-    public Client(String nombre, String mote, String telefono,Date registro, Double latitud, Double longitud) {
+    public Client(int id, int punts, String nombre, String mote, String telefono, int tienda, String pass, Date registro, Double latitud, Double longitud) {
+        this.id = id;
+        this.punts = punts;
         this.nombre = nombre;
         this.mote = mote;
         this.telefono = telefono;
-        this.punts = 0;
+        this.tienda = tienda;
+        this.pass = pass;
         this.registro = registro;
+        this.latitud = latitud;
+        this.longitud = longitud;
     }
 
     public int getId() {

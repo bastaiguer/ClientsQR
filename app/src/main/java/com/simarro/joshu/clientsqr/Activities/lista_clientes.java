@@ -1,7 +1,7 @@
 package com.simarro.joshu.clientsqr.Activities;
 
 import android.content.Intent;
-import android.location.Location;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,16 +10,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.simarro.joshu.clientsqr.BBDD.BD;
 import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.Pojo.LlistaClients;
+import com.simarro.joshu.clientsqr.Pojo.Tenda;
 import com.simarro.joshu.clientsqr.R;
-import com.simarro.joshu.clientsqr.Resources.DialogoLlamada;
-import com.simarro.joshu.clientsqr.Resources.DialogoOpcionesClient;
-import com.simarro.joshu.clientsqr.Resources.adapterListClients;
+import com.simarro.joshu.clientsqr.Resources.Dialogs.DialogoLlamada;
+import com.simarro.joshu.clientsqr.Resources.Dialogs.DialogoOpcionesClient;
+import com.simarro.joshu.clientsqr.Resources.Adapters.adapterListClients;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,6 +38,7 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
     private DialogoOpcionesClient dialeg2 = new DialogoOpcionesClient();
     private BD bd;
     private int tipoOrden = 0;
+    private Tenda tenda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
         llista = findViewById(R.id.listView_clients);
         toolbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
+        tenda = (Tenda) getIntent().getExtras().getSerializable("tenda");
         //Accedemos a la BBDD mediante un Thread
         bd = new BD(getApplicationContext()) {
             public void run() {
@@ -52,7 +56,7 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
                     synchronized (this) {
                         wait(500);
                         conectarBDMySQL();
-                        getClientes();
+                        getClientes(tenda.getId());
                         cerrarConexion();
                     }
                 } catch (InterruptedException e) {
@@ -88,6 +92,12 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
         switch (item.getItemId()) {
             case R.id.ordenar_por_puntos:
                 ordenarPorPuntos();
+                break;
+            case R.id.premios:
+                Intent intent = new Intent(this,premios.class);
+                intent.putExtra("tenda",this.tenda);
+                intent.putExtra("tipo",true);
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -185,4 +195,5 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
         dialeg2.show(getSupportFragmentManager(), "dialegModDel");
         return false;
     }
+
 }

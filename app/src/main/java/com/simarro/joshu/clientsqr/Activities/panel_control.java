@@ -27,13 +27,10 @@ import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.R;
 import com.simarro.joshu.clientsqr.Resources.MyFragmentPagerAdapter;
 
-public class panel_control extends FragmentActivity implements View.OnClickListener  {
+public class panel_control extends FragmentActivity{
 
     private ViewPager pager = null;
-    private TextView titulo;
-    private MyFragmentPagerAdapter pagerAdapter = null;
     private TabLayout tabsTitulos;
-    private Button preferencias;
     private Client client;
 
     @Override
@@ -49,9 +46,8 @@ public class panel_control extends FragmentActivity implements View.OnClickListe
         this.pager.setAdapter(pagerAdapter);
         tabsTitulos = findViewById(R.id.tabLayout_titulos);
         tabsTitulos.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tabsTitulos.setTabGravity(TabLayout.GRAVITY_CENTER);
         tabsTitulos.setupWithViewPager(pager);
-        preferencias = findViewById(R.id.btn_preferencias);
-        preferencias.setOnClickListener(this);
 
     }
 
@@ -64,15 +60,6 @@ public class panel_control extends FragmentActivity implements View.OnClickListe
             super.onBackPressed();
         }else{
             this.pager.setCurrentItem(this.pager.getCurrentItem()-1);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        Intent intent;
-        if (v.getId() == R.id.btn_preferencias) {
-            intent = new Intent(this, gestionarPreferencias.class);
-            startActivity(intent);
         }
     }
 }

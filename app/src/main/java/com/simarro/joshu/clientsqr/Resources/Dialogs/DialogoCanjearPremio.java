@@ -1,4 +1,4 @@
-package com.simarro.joshu.clientsqr.Resources;
+package com.simarro.joshu.clientsqr.Resources.Dialogs;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -19,18 +19,18 @@ import android.widget.TextView;
 import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.R;
 
-public class DialogoLlamada extends DialogFragment implements View.OnClickListener {
+public class DialogoCanjearPremio extends DialogFragment implements View.OnClickListener {
 
     private int MY_PERMISSIONS_REQUEST_CALL_PHONE;
     private TextView nom, tlf;
     private Button llamada;
 
-    public DialogoLlamada(){
+    public DialogoCanjearPremio(){
 
     }
 
-    public static DialogoLlamada newInstance(Client c){
-        DialogoLlamada dialogo = new DialogoLlamada();
+    public static DialogoCanjearPremio newInstance(Client c){
+        DialogoCanjearPremio dialogo = new DialogoCanjearPremio();
         Bundle args = new Bundle();
         args.putSerializable("client",c);
         dialogo.setArguments(args);

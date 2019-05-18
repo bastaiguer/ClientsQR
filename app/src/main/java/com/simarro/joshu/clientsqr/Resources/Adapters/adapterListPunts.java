@@ -1,4 +1,4 @@
-package com.simarro.joshu.clientsqr.Resources;
+package com.simarro.joshu.clientsqr.Resources.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

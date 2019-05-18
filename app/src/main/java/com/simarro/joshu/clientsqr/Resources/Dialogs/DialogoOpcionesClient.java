@@ -1,4 +1,4 @@
-package com.simarro.joshu.clientsqr.Resources;
+package com.simarro.joshu.clientsqr.Resources.Dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

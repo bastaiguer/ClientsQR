@@ -14,7 +14,7 @@
         android:layout_height="0dp"
         android:textAlignment="center"
         android:textColor="@color/design_default_color_primary_dark"
-        android:textSize="18sp"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline57"
         app:layout_constraintEnd_toStartOf="@+id/guideline55"
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.04" />
+        app:layout_constraintGuide_percent="0.0" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline55"
@@ -67,11 +67,10 @@
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         android:text="Id"
         android:textAlignment="center"
         android:textColor="@color/txt"
-        android:textSize="18sp"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline52"
         app:layout_constraintEnd_toStartOf="@+id/guideline55"
@@ -85,7 +84,7 @@
         android:text="Nombre"
         android:textAlignment="center"
         android:textColor="@color/txt"
-        android:textSize="18sp"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline65"
         app:layout_constraintEnd_toStartOf="@+id/guideline55"
@@ -98,7 +97,7 @@
         android:layout_height="0dp"
         android:textAlignment="center"
         android:textColor="@color/design_default_color_primary_dark"
-        android:textSize="18sp"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline62"
         app:layout_constraintEnd_toStartOf="@+id/guideline55"
@@ -109,11 +108,10 @@
         android:id="@+id/unTextView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         android:text="Registro"
         android:textAlignment="center"
         android:textColor="@color/txt"
-        android:textSize="18sp"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline59"
         app:layout_constraintEnd_toStartOf="@+id/guideline55"
@@ -124,12 +122,9 @@
         android:id="@+id/txt_mostrar_nombre"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:textAlignment="center"
         android:textColor="@color/design_default_color_primary_dark"
-        android:textSize="18sp"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline58"
         app:layout_constraintEnd_toStartOf="@+id/guideline55"
@@ -141,7 +136,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.22" />
+        app:layout_constraintGuide_percent="0.2" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline62"
@@ -167,7 +162,7 @@
         android:textColor="@color/txt"
         app:layout_constraintBottom_toTopOf="@+id/guideline67"
         app:layout_constraintEnd_toStartOf="@+id/guideline60"
-        app:layout_constraintStart_toStartOf="@+id/guideline53"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline62" />
 
     <Button
@@ -193,7 +188,7 @@
         android:textColor="@color/txt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline60"
-        app:layout_constraintStart_toStartOf="@+id/guideline53"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline67" />
 
     <Button

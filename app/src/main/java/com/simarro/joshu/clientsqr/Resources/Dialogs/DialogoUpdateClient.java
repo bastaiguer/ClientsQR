@@ -1,4 +1,4 @@
-package com.simarro.joshu.clientsqr.Resources;
+package com.simarro.joshu.clientsqr.Resources.Dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.simarro.joshu.clientsqr.Activities.lista_clientes;
 import com.simarro.joshu.clientsqr.BBDD.BD;
 import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.R;

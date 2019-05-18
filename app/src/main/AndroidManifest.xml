@@ -16,13 +16,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".Activities.MiPerfil"></activity>
+        <activity android:name=".Activities.add_premio" />
+        <activity android:name=".Activities.premios" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCKMhXKlzKq3MA97TrqhNJznpmQjPbPB8A" />
-        <activity android:name=".Activities.panel_control"></activity>
+
+        <activity android:name=".Activities.panel_control" />
         <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

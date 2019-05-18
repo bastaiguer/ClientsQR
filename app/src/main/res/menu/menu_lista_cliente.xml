@@ -4,7 +4,7 @@
     <item
         android:id="@+id/ordenar_por_puntos"
         android:icon="@drawable/selector_ordenamiento"
-        android:orderInCategory="4"
+        android:orderInCategory="3"
         android:title="Ordenar por puntos"
         app:showAsAction="always" />
     <item
@@ -14,5 +14,12 @@
         android:title="Search"
         android:visible="true"
         app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/premios"
+        android:icon="@drawable/selector_canjear_por_cupon"
+        android:orderInCategory="2"
+        android:title="Premios"
+        android:visible="true"
         app:showAsAction="always" />
 </menu>
