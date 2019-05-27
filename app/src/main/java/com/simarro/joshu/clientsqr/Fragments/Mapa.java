@@ -1,32 +1,24 @@
 package com.simarro.joshu.clientsqr.Fragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.simarro.joshu.clientsqr.BBDD.BD;
 import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.Pojo.Punts;
 import com.simarro.joshu.clientsqr.R;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -87,6 +79,12 @@ public class Mapa extends Fragment implements OnMapReadyCallback {
 
     }
 
+    @Subscribe
+    public void setPunts(ArrayList<Punts> editado){
+        this.punts = editado;
+        this.cargarMapa();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -115,18 +113,18 @@ public class Mapa extends Fragment implements OnMapReadyCallback {
         mapa.getMapAsync(this);
     }
 
-    private double[] calcMediaLatLong() {
+    private double[] calcMediaLatLong(ArrayList<Punts> puntos) {
         double[] res = new double[2];
         double medLats = 38.9674887, medLongs = -0.5862496;
-        if (this.punts.size() > 0) {
+        if (puntos.size() > 0) {
             medLats = 0;
             medLongs = 0;
-            for (Punts p : this.punts) {
+            for (Punts p : puntos) {
                 medLats += p.getLatitud();
                 medLongs += p.getLongitud();
             }
-            medLats = medLats / this.punts.size();
-            medLongs = medLongs / this.punts.size();
+            medLats = medLats / puntos.size();
+            medLongs = medLongs / puntos.size();
         }
         res[0] = medLats;
         res[1] = medLongs;
@@ -137,17 +135,21 @@ public class Mapa extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         LatLng aux;
         String asPunts;
-        double[] media = new double[2];
+        ArrayList<Punts> puntos = new ArrayList<>();
+        double[] media;
         for (Punts p : this.punts) {
-            aux = new LatLng(p.getLatitud(), p.getLongitud());
-            if (p.isOperacio()) {
-                asPunts = "+" + p.getPunts() + " " + p.getRegistro();
-            } else {
-                asPunts = "-" + p.getPunts() + " " + p.getRegistro();
+            if(p.getLatitud() != 0 && p.getLongitud() != 0) {
+                aux = new LatLng(p.getLatitud(), p.getLongitud());
+                puntos.add(p);
+                if (p.isOperacio()) {
+                    asPunts = "+" + p.getPunts() + " " + p.getRegistro();
+                } else {
+                    asPunts = "-" + p.getPunts() + " " + p.getRegistro();
+                }
+                googleMap.addMarker(new MarkerOptions().position(aux).title(asPunts));
             }
-            googleMap.addMarker(new MarkerOptions().position(aux).title(asPunts));
         }
-        media = calcMediaLatLong();
+        media = calcMediaLatLong(puntos);
         aux = new LatLng(media[0], media[1]);
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(aux));
         if (this.punts.size() > 0) {
@@ -169,9 +171,5 @@ public class Mapa extends Fragment implements OnMapReadyCallback {
         this.bus.unregister(this);
     }
 
-    @Subscribe
-    public void ejecutarLlamada(ArrayList<Punts> pts){
-        this.punts = pts;
-        this.cargarMapa();
-    }
+
 }

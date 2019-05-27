@@ -31,7 +31,7 @@ public class lector_qr extends AppCompatActivity {
     private CameraSource cameraSource;
     private SurfaceView cameraView;
     private final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
-    private String token = "3";
+    private String token = "-1";
     private String tokenanterior = "";
     private int op = 3;
     private boolean comp = false;
@@ -89,7 +89,7 @@ public class lector_qr extends AppCompatActivity {
                     // verificamos que el token anterior no se igual al actual
                     // esto es util para evitar multiples llamadas empleando el mismo token
                     if (!token.equals(tokenanterior)) {
-                        // guardamos el ultimo token proceado
+                        // guardamos el ultimo token procesado
                         tokenanterior = token;
                         Log.i("token", token);
                         /*if (URLUtil.isValidUrl(token)) {
@@ -105,6 +105,7 @@ public class lector_qr extends AppCompatActivity {
                             startActivity(shareIntent);
                         }*/
                         Intent intent = new Intent();
+                        Toast.makeText(getApplicationContext(),token,Toast.LENGTH_SHORT).show();
                         Tenda tenda2;
                         if (op == 0) {
                             intent.setClass(lector_qr.this.getApplicationContext(), modificar_puntos.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -206,7 +207,6 @@ public class lector_qr extends AppCompatActivity {
                         }).start();
 
                     }
-                    barcodeDetector.release();
                 }
             }
         });
@@ -216,7 +216,6 @@ public class lector_qr extends AppCompatActivity {
         if(qr.substring(0,3).equals("TND")){
             return true;
         }else {
-            System.out.println(qr.substring(0,2)+"  <---");
             return false;
         }
     }

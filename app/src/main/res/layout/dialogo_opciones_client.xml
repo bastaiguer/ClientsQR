@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
+        app:layout_constraintGuide_percent="0.11" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline43"
@@ -63,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_percent="0.57" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline48"
@@ -86,4 +86,52 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline44"
         app:layout_constraintStart_toStartOf="@+id/guideline48"
         app:layout_constraintTop_toTopOf="@+id/guideline42" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline151"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.89" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline152"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.65" />
+
+    <ImageView
+        android:id="@+id/editar_logo"
+        android:layout_width="80dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/editar"
+        app:layout_constraintBottom_toTopOf="@+id/guideline151"
+        app:layout_constraintEnd_toStartOf="@+id/guideline48"
+        app:layout_constraintStart_toStartOf="@+id/guideline46"
+        app:layout_constraintTop_toTopOf="@+id/guideline152" />
+
+    <ImageView
+        android:id="@+id/stats_titulo"
+        android:layout_width="70dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="7dp"
+        android:background="@drawable/stats"
+        app:layout_constraintBottom_toTopOf="@+id/guideline151"
+        app:layout_constraintEnd_toStartOf="@+id/eliminar_titulo"
+        app:layout_constraintStart_toEndOf="@+id/editar_logo"
+        app:layout_constraintTop_toTopOf="@+id/guideline152" />
+
+    <ImageView
+        android:id="@+id/eliminar_titulo"
+        android:layout_width="95dp"
+        android:layout_height="25dp"
+        android:background="@drawable/eliminar"
+        app:layout_constraintBottom_toTopOf="@+id/guideline151"
+        app:layout_constraintEnd_toStartOf="@+id/guideline43"
+        app:layout_constraintStart_toStartOf="@+id/guideline44"
+        app:layout_constraintTop_toTopOf="@+id/guideline152" />
 </android.support.constraint.ConstraintLayout>

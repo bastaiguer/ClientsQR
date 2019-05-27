@@ -4,17 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:orientation="vertical"
     android:background="@drawable/fondo"
+    android:orientation="vertical"
     tools:context=".Activities.lector_qr">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:orientation="vertical">
 
         <SurfaceView
             android:id="@+id/camera_view"

@@ -112,12 +112,24 @@ public class BD implements Runnable {
         }
     }
 
-    protected void modCanjeado(int id){
-        java.sql.PreparedStatement stmt = null;
+    protected void modCanjeado(int id, int premi){
+        java.sql.PreparedStatement stmt = null,stmt2;
+        ResultSet rs;
+        int idRegistro = 3;
         try {
+            stmt2 = conexionMySQL.prepareCall("SELECT id FROM registre_premis WHERE client=? AND premi=? AND canjeado=? ORDER BY id LIMIT ?");
+
+            stmt2.setInt(1, id);
+            stmt2.setInt(2, premi);
+            stmt2.setInt(3, 0);
+            stmt2.setInt(4, 1);
+            rs = stmt2.executeQuery();
+            while (rs.next()) {
+                idRegistro = rs.getInt("id");
+            }
             stmt = conexionMySQL.prepareCall("UPDATE registre_premis SET canjeado=? WHERE id=?");
-            stmt.setInt(1, 1);
-            stmt.setInt(2, id);
+            stmt.setInt(1,1);
+            stmt.setInt(2,idRegistro);
             stmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
@@ -132,13 +144,13 @@ public class BD implements Runnable {
         }
     }
 
-    protected void listarMisPremios(int idCliente){
+    protected void getCupones(int idCliente){
         this.premis = new ArrayList<>();
         java.sql.PreparedStatement stmt = null;
         Premi premi;
         ResultSet rs = null;
         try {
-            stmt = this.conexionMySQL.prepareStatement("SELECT * FROM registre_premis WHERE client = ? AND canjeado = 0");
+            stmt = this.conexionMySQL.prepareStatement("SELECT P.id, P.titulo, P.descripcion, P.imagen, P.puntos FROM registre_premis R INNER JOIN premis P ON R.premi = P.id WHERE R.client = ? AND R.canjeado = 0");
             stmt.setInt(1,idCliente);
             rs = stmt.executeQuery();
             while (rs.next()) {
@@ -164,6 +176,34 @@ public class BD implements Runnable {
                 System.out.println("Error al cerrar la conexión...");
             }
         }
+    }
+
+    public int numeroCanjeos(int cliente){
+        int numCanjeos = 0;
+        java.sql.PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = this.conexionMySQL.prepareStatement("SELECT * FROM registre_premis WHERE client = ? AND canjeado = 1");
+            stmt.setInt(1,cliente);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                numCanjeos++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Error al cerrar la conexión...");
+            }
+        }
+        return numCanjeos;
     }
 
     protected void canjearPremio(int idPremio, int idCliente){
@@ -281,7 +321,7 @@ public class BD implements Runnable {
         Punts punts;
         ResultSet rs = null;
         try {
-            stmt = this.conexionMySQL.prepareStatement("SELECT * FROM registre_punts WHERE idclient = ?");
+            stmt = this.conexionMySQL.prepareStatement("SELECT * FROM registre_punts WHERE idclient=? ");
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
             while (rs.next()) {

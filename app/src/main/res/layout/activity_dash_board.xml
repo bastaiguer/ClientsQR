@@ -81,7 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.84" />
+        app:layout_constraintGuide_percent="0.59" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline113"
@@ -95,10 +95,18 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:foreground="@drawable/selector_cerrar_sesion"
         android:foregroundGravity="center|center_horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline112"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline113"
-        app:layout_constraintTop_toTopOf="@+id/guideline112" />
+        app:layout_constraintTop_toTopOf="@+id/guideline150" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline150"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.42" />
 </android.support.constraint.ConstraintLayout>

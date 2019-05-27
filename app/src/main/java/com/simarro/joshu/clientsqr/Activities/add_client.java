@@ -141,6 +141,7 @@ public class add_client extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onDestroy() { //Utilizado para que al destruirse vaya al dashboard directamente
         Intent intent = new Intent(this,DashBoard.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("tenda",this.tenda);
         startActivity(intent);
         super.onDestroy();
     }

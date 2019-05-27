@@ -17,7 +17,6 @@ public class DialogoDeleteClient extends DialogFragment{
 
     private TextView txt_client;
     private Client c;
-    private Context context;
 
     public DialogoDeleteClient(){
 

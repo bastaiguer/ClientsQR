@@ -2,6 +2,7 @@ package com.simarro.joshu.clientsqr.Resources.Dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,26 +11,30 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.simarro.joshu.clientsqr.Activities.lista_clientes;
 import com.simarro.joshu.clientsqr.BBDD.BD;
 import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.R;
+import com.simarro.joshu.clientsqr.Resources.ListaClientesDialogsInterface;
 
 public class DialogoUpdateClient extends DialogFragment implements View.OnClickListener {
 
     private Button ok;
     private EditText nom, tlf, punts;
     private Client c;
+    private ListaClientesDialogsInterface interfazComunicacion;
 
     public DialogoUpdateClient(){
 
     }
 
-    public static DialogoUpdateClient newInstance(Client c){
+    public static DialogoUpdateClient newInstance(Client c, ListaClientesDialogsInterface interfazComunicacion){
         DialogoUpdateClient dialogo = new DialogoUpdateClient();
         Bundle args = new Bundle();
         args.putSerializable("client",c);
+        args.putSerializable("listener",interfazComunicacion);
         dialogo.setArguments(args);
         return dialogo;
     }
@@ -41,6 +46,7 @@ public class DialogoUpdateClient extends DialogFragment implements View.OnClickL
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialogo_update_client,null);
         c = (Client) getArguments().getSerializable("client");
+        this.interfazComunicacion = (ListaClientesDialogsInterface) getArguments().getSerializable("listener");
         builder.setView(view);
         //getFragmentManager().findFragmentById().onDestroy();
         nom = view.findViewById(R.id.ed_update_nom);
@@ -83,6 +89,13 @@ public class DialogoUpdateClient extends DialogFragment implements View.OnClickL
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            this.dismiss();
         }
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        this.interfazComunicacion.recargarLista();
     }
 }

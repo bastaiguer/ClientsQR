@@ -1,6 +1,8 @@
 package com.simarro.joshu.clientsqr.Pojo;
 
-public class Premi {
+import java.io.Serializable;
+
+public class Premi implements Serializable {
 
     private int id, puntos;
     private String titulo, imagen, descripcion;

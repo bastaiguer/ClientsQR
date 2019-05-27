@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="200dp"
+    android:background="@drawable/selector_menu">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline142"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.08" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline143"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.92" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline144"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.53" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline145"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.47" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline146"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline147"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <Button
+        android:id="@+id/btn_aceptar_canjeo"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/selector_si_canjeo"
+        app:layout_constraintBottom_toTopOf="@+id/guideline146"
+        app:layout_constraintEnd_toStartOf="@+id/guideline145"
+        app:layout_constraintStart_toStartOf="@+id/guideline142"
+        app:layout_constraintTop_toTopOf="@+id/guideline147" />
+
+    <Button
+        android:id="@+id/btn_cancelar_canjeo"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/selector_no_canjeo"
+        app:layout_constraintBottom_toTopOf="@+id/guideline146"
+        app:layout_constraintEnd_toStartOf="@+id/guideline143"
+        app:layout_constraintStart_toStartOf="@+id/guideline144"
+        app:layout_constraintTop_toTopOf="@+id/guideline147" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline148"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline149"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <TextView
+        android:id="@+id/txt_canjeo_u_want"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Quieres canjearlo?"
+        android:textAlignment="center"
+        android:textColor="@color/espontani"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline149"
+        app:layout_constraintEnd_toStartOf="@+id/guideline143"
+        app:layout_constraintStart_toStartOf="@+id/guideline142"
+        app:layout_constraintTop_toTopOf="@+id/guideline148" />
+</android.support.constraint.ConstraintLayout>

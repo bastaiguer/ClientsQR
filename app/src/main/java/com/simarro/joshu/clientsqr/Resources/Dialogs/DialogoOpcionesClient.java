@@ -15,20 +15,25 @@ import com.simarro.joshu.clientsqr.Activities.panel_control;
 import com.simarro.joshu.clientsqr.BBDD.BD;
 import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.R;
+import com.simarro.joshu.clientsqr.Resources.ListaClientesDialogsInterface;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class DialogoOpcionesClient extends DialogFragment implements View.OnClickListener {
 
     private Button eliminar, modificar, pan_cont;
     private Client c;
+    private ListaClientesDialogsInterface interfazComunicacion;
 
     public DialogoOpcionesClient(){
 
     }
 
-    public static DialogoOpcionesClient newInstance(Client c){
+    public static DialogoOpcionesClient newInstance(Client c, ListaClientesDialogsInterface listaClientesDialogsInterface){
         DialogoOpcionesClient dialogo = new DialogoOpcionesClient();
         Bundle args = new Bundle();
         args.putSerializable("client",c);
+        args.putSerializable("listener",listaClientesDialogsInterface);
         dialogo.setArguments(args);
         return dialogo;
     }
@@ -40,6 +45,8 @@ public class DialogoOpcionesClient extends DialogFragment implements View.OnClic
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialogo_opciones_client,null);
         c = (Client) getArguments().getSerializable("client");
+
+        this.interfazComunicacion = (ListaClientesDialogsInterface) getArguments().getSerializable("listener");
         builder.setView(view);
 
         eliminar = view.findViewById(R.id.btn_eliminar);
@@ -79,13 +86,16 @@ public class DialogoOpcionesClient extends DialogFragment implements View.OnClic
             }
             DialogoDeleteClient dialegDel = DialogoDeleteClient.newInstance(c);
             dialegDel.show(getFragmentManager(),"dialegDelete");
+            this.interfazComunicacion.recargarLista();
         }else if(v.getId() == R.id.btn_modificar){
-            DialogoUpdateClient dialegUpd = DialogoUpdateClient.newInstance(c);
+            DialogoUpdateClient dialegUpd = DialogoUpdateClient.newInstance(c,this.interfazComunicacion);
             dialegUpd.show(getFragmentManager(), "dialegUpdate");
         }else if(v.getId() == R.id.btn_panel_control){
             Intent intent = new Intent(getContext(), panel_control.class);
             intent.putExtra("client",c);
             startActivity(intent);
         }
+        this.dismiss();
     }
+
 }

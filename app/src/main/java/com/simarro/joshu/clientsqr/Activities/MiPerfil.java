@@ -30,6 +30,7 @@ import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.Pojo.Punts;
 import com.simarro.joshu.clientsqr.R;
 import com.simarro.joshu.clientsqr.Resources.Dialogs.DialogoCambioPass;
+import com.simarro.joshu.clientsqr.Resources.Dialogs.DialogoFotoPerfil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -44,11 +45,11 @@ public class MiPerfil extends AppCompatActivity implements View.OnClickListener,
     private CircularImageView circularImageView;
     private Client client = new Client();
     private String img;
-    private boolean mostrarImg = true;
     private ImageView imatgePerfil;
     private Button btnCerrarSesion, btnPass, btnPremios, btnCupones;
     private TextView txtPuntos, txtCanjeos, txtNombre;
     private EventBus bus = EventBus.getDefault();
+    private int numCanjeos = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,20 +84,77 @@ public class MiPerfil extends AppCompatActivity implements View.OnClickListener,
         this.txtNombre.setText(this.client.getNombre());
         String punts = this.client.getPunts()+" Puntos";
         this.txtPuntos.setText(punts);
+        this.actualizarNumCanjeos();
+    }
+
+    private void actualizarNumCanjeos(){
+        BD bd = new BD(getApplicationContext()) {
+            public void run() {
+                try {
+                    synchronized (this) {
+                        wait(500);
+                        conectarBDMySQL();
+                        numCanjeos = numeroCanjeos(client.getId());
+                        cerrarConexion();
+                    }
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    Log.e("Error", "Waiting didnt work!!");
+                    e.printStackTrace();
+                }
+            }
+        };
+        Thread th = new Thread(bd);
+        th.start();
+        try {
+            th.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if(this.numCanjeos == 1){
+            this.txtCanjeos.setText(this.numCanjeos+" Canjeo");
+        }else{
+            this.txtCanjeos.setText(this.numCanjeos+" Canjeos");
+        }
+    }
+
+    private void actualizarCliente(){
+        BD bd = new BD(getApplicationContext()) {
+            public void run() {
+                try {
+                    synchronized (this) {
+                        wait(500);
+                        conectarBDMySQL();
+                        getClient(client.getId());
+                        cerrarConexion();
+                    }
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    Log.e("Error", "Waiting didnt work!!");
+                    e.printStackTrace();
+                }
+            }
+        };
+        Thread th = new Thread(bd);
+        th.start();
+        try {
+            th.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        this.client = bd.getClientOb();
+        if(this.client.getPunts() == 1){
+            this.txtPuntos.setText(this.client.getPunts()+" Punto");
+        }else {
+            this.txtPuntos.setText(this.client.getPunts() + " Puntos");
+        }
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.imagen_perfil || v.getId() == R.id.imagen_perfil_cuadrada) {
-            if (this.mostrarImg) {
-                this.imatgePerfil.setVisibility(View.VISIBLE);
-                this.circularImageView.setVisibility(View.INVISIBLE);
-                this.mostrarImg = false;
-            } else {
-                this.imatgePerfil.setVisibility(View.INVISIBLE);
-                this.circularImageView.setVisibility(View.VISIBLE);
-                this.mostrarImg = true;
-            }
+        if (v.getId() == R.id.imagen_perfil) {
+            DialogoFotoPerfil dialogoFotoPerfil = DialogoFotoPerfil.newInstance(this.client.getImagen());
+            dialogoFotoPerfil.show(getSupportFragmentManager(),"dialogoFotoPerfil");
         }else{
             Intent intent;
             switch(v.getId()){
@@ -119,7 +177,9 @@ public class MiPerfil extends AppCompatActivity implements View.OnClickListener,
                     startActivity(intent);
                     break;
                 case R.id.btn_cupones_perfil: //Intent to CuponesCliente
-
+                    intent = new Intent(this, Cupones.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra("client",this.client);
+                    startActivity(intent);
                     break;
             }
         }
@@ -225,6 +285,8 @@ public class MiPerfil extends AppCompatActivity implements View.OnClickListener,
     @Override
     public void onResume() {
         super.onResume();
+        this.actualizarNumCanjeos();
+        this.actualizarCliente();
         this.bus.register(this);
     }
 

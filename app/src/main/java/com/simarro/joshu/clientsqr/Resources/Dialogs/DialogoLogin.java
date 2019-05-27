@@ -178,7 +178,6 @@ public class DialogoLogin extends DialogFragment implements View.OnClickListener
                             editor.putInt("user",this.c.getId());
                             editor.putInt("tipo",1);
                             editor.commit();
-                            this.onDestroy();
                         }else if (txtPass.equals(this.c.getPass()) && numUser.equals("" + this.c.getId())) {
                             intent = new Intent(this.getActivity(), MiPerfil.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             intent.putExtra("client",this.c);
@@ -189,7 +188,6 @@ public class DialogoLogin extends DialogFragment implements View.OnClickListener
                             editor.putInt("tipo",1);
                             editor.commit();
                             startActivity(intent);
-                            this.onDestroy();
                         } else {
                             Toast.makeText(getContext(), "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
                         }

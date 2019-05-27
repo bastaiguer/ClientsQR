@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Activities.MiPerfil"></activity>
+        <activity android:name=".Activities.Cupones"></activity>
+        <activity android:name=".Activities.MiPerfil" />
         <activity android:name=".Activities.add_premio" />
         <activity android:name=".Activities.premios" />
 

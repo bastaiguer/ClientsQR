@@ -1,7 +1,7 @@
 package com.simarro.joshu.clientsqr.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -22,12 +21,13 @@ import com.simarro.joshu.clientsqr.R;
 import com.simarro.joshu.clientsqr.Resources.Dialogs.DialogoLlamada;
 import com.simarro.joshu.clientsqr.Resources.Dialogs.DialogoOpcionesClient;
 import com.simarro.joshu.clientsqr.Resources.Adapters.adapterListClients;
+import com.simarro.joshu.clientsqr.Resources.ListaClientesDialogsInterface;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class lista_clientes extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+public class lista_clientes extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, ListaClientesDialogsInterface {
 
     private LlistaClients clients = new LlistaClients();
     private ArrayList<Client> edited = new ArrayList<>();
@@ -44,47 +44,12 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_clientes);
-
         llista = findViewById(R.id.listView_clients);
         toolbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
         tenda = (Tenda) getIntent().getExtras().getSerializable("tenda");
         //Accedemos a la BBDD mediante un Thread
-        bd = new BD(getApplicationContext()) {
-            public void run() {
-                try {
-                    synchronized (this) {
-                        wait(500);
-                        conectarBDMySQL();
-                        getClientes(tenda.getId());
-                        cerrarConexion();
-                    }
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    Log.e("Error", "Waiting didnt work!!");
-                    e.printStackTrace();
-                }
-            }
-        };
-        Thread th = new Thread(bd);
-        th.start();
-        try {
-            th.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        //Obtenemos la lista de los clientes en la BBDD
-        this.clients.addLlista(bd.obClients());
-        edited = clients.getClients();
-        if (this.edited.size() > 0) {
-            adapter = new adapterListClients(edited, this.getApplicationContext());
-            llista.setAdapter(adapter);
-            llista.setOnItemClickListener(this);
-        } else {
-            findViewById(R.id.clients_not_size).setVisibility(View.VISIBLE);
-        }
-        getSupportActionBar().setTitle(clients.size() + " Clients");
-        llista.setOnItemLongClickListener(this);
+        this.recargarLista();
     }
 
     @Override
@@ -191,9 +156,48 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        dialeg2 = DialogoOpcionesClient.newInstance(edited.get(position));
+        final lista_clientes act = this;
+        dialeg2 = DialogoOpcionesClient.newInstance(edited.get(position), act);
         dialeg2.show(getSupportFragmentManager(), "dialegModDel");
         return false;
     }
 
+
+    @Override
+    public void recargarLista(){
+        bd = new BD(getApplicationContext()) {
+            public void run() {
+                try {
+                    synchronized (this) {
+                        wait(500);
+                        conectarBDMySQL();
+                        getClientes(tenda.getId());
+                        cerrarConexion();
+                    }
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    Log.e("Error", "Waiting didnt work!!");
+                    e.printStackTrace();
+                }
+            }
+        };
+        Thread th = new Thread(bd);
+        th.start();
+        try {
+            th.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //Obtenemos la lista de los clientes en la BBDD
+        edited = bd.obClients();
+        if (this.edited.size() > 0) {
+            adapter = new adapterListClients(edited, this.getApplicationContext());
+            llista.setAdapter(adapter);
+            llista.setOnItemClickListener(this);
+        } else {
+            findViewById(R.id.clients_not_size).setVisibility(View.VISIBLE);
+        }
+        getSupportActionBar().setTitle(edited.size() + " Clients");
+        llista.setOnItemLongClickListener(this);
+    }
 }
