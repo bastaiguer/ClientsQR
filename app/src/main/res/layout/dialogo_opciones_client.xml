@@ -2,15 +2,16 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
-    android:layout_height="150dp"
+    android:layout_width="280dp"
+    android:layout_height="120dp"
     android:background="@drawable/selector_menu">
 
     <Button
         android:id="@+id/btn_eliminar"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/selector_eliminar_client"
         app:layout_constraintBottom_toTopOf="@+id/guideline47"
         app:layout_constraintEnd_toStartOf="@+id/guideline43"
@@ -21,9 +22,10 @@
         android:id="@+id/btn_modificar"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/selector_mod_client"
-        app:layout_constraintBottom_toTopOf="@+id/guideline47"
+        app:layout_constraintBottom_toTopOf="@+id/editar_logo"
         app:layout_constraintEnd_toStartOf="@+id/guideline48"
         app:layout_constraintHorizontal_bias="0.588"
         app:layout_constraintStart_toStartOf="@+id/guideline46"
@@ -35,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.11" />
+        app:layout_constraintGuide_percent="0.05" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline43"
@@ -76,11 +78,10 @@
         android:id="@+id/btn_panel_control"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="65dp"
-        android:layout_height="70dp"
+        android:layout_height="68dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:background="@drawable/selector_graficos"
         app:layout_constraintBottom_toTopOf="@+id/guideline47"
         app:layout_constraintEnd_toStartOf="@+id/guideline44"

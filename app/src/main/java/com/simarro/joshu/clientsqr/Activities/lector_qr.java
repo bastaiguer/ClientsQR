@@ -21,6 +21,7 @@ import com.simarro.joshu.clientsqr.BBDD.BD;
 import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.Pojo.Tenda;
 import com.simarro.joshu.clientsqr.R;
+import com.simarro.joshu.clientsqr.Resources.Dialogs.DialogoInfo;
 import com.simarro.joshu.clientsqr.Resources.Dialogs.DialogoLogin;
 
 import java.io.IOException;
@@ -180,12 +181,15 @@ public class lector_qr extends AppCompatActivity {
                                 Client client = bd.getClientOb();
                                 if (!client.getNombre().equals("..truco..")) {
                                     if (client.getPass().equals("")) {
-                                        Toast.makeText(getApplicationContext(), "Introduce la contraseña que utilizarás", Toast.LENGTH_SHORT).show();
+                                        DialogoInfo dialogoInfo = DialogoInfo.newInstance("Introduce la contraseña que utilizarás");
+                                        dialogoInfo.show(getSupportFragmentManager(),"dialogoInfo");
                                     }
                                     DialogoLogin dialeg = DialogoLogin.newInstance(token, client,false);
                                     dialeg.show(getSupportFragmentManager(), "dialeg");
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "Usuario no registrado", Toast.LENGTH_SHORT).show();
+                                    System.out.println("Usuario no regisrado...");
+                                    DialogoInfo dialogoInfo = DialogoInfo.newInstance("Usuario no registrado");
+                                    dialogoInfo.show(getSupportFragmentManager(),"dialogoInfo");
                                 }
                             }
                         }

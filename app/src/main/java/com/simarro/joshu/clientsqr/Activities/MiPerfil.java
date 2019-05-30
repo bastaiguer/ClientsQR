@@ -153,8 +153,12 @@ public class MiPerfil extends AppCompatActivity implements View.OnClickListener,
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.imagen_perfil) {
-            DialogoFotoPerfil dialogoFotoPerfil = DialogoFotoPerfil.newInstance(this.client.getImagen());
-            dialogoFotoPerfil.show(getSupportFragmentManager(),"dialogoFotoPerfil");
+            if(this.client.getImagen().equals("")){
+                Toast.makeText(this,"Mantén presionado para cambiar la imagen de perfil",Toast.LENGTH_SHORT).show();
+            }else{
+                DialogoFotoPerfil dialogoFotoPerfil = DialogoFotoPerfil.newInstance(this.client.getImagen());
+                dialogoFotoPerfil.show(getSupportFragmentManager(),"dialogoFotoPerfil");
+            }
         }else{
             Intent intent;
             switch(v.getId()){
