@@ -7,10 +7,12 @@ public class Client implements Serializable {
 
     private int id, punts;
     private String nombre;
-    private String mote;
     private String telefono;
     private int tienda;
     private String imagen = "";
+    private String pass;
+    private Date registro;
+    private Double latitud, longitud;
 
     public String getImagen() {
         return imagen;
@@ -36,19 +38,15 @@ public class Client implements Serializable {
         this.pass = pass;
     }
 
-    private String pass;
-    private Date registro;
-    private Double latitud, longitud;
 
     public Client(){
         super();
     }
 
-    public Client(int id, int punts, String nombre, String mote, String telefono, int tienda, String pass, Date registro, Double latitud, Double longitud) {
+    public Client(int id, int punts, String nombre, String telefono, int tienda, String pass, Date registro, Double latitud, Double longitud) {
         this.id = id;
         this.punts = punts;
         this.nombre = nombre;
-        this.mote = mote;
         this.telefono = telefono;
         this.tienda = tienda;
         this.pass = pass;
@@ -73,13 +71,6 @@ public class Client implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getMote() {
-        return mote;
-    }
-
-    public void setMote(String mote) {
-        this.mote = mote;
-    }
 
     public String getTelefono() {
         return telefono;

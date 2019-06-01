@@ -80,8 +80,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/fondo"
-            android:foreground="@drawable/selector_suma_puntos"
-            android:foregroundGravity="center_vertical|center"
+            android:foreground="@drawable/selector_mod_suma_puntos"
+            android:foregroundGravity="center_vertical|clip_horizontal|center|clip_vertical"
             android:onClick="onClick" />
 
         <ImageButton
@@ -90,8 +90,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/fondo"
-            android:foreground="@drawable/selector_canjear_por_cupon"
-            android:foregroundGravity="center"
+            android:foreground="@drawable/selector_mod_premios"
+            android:foregroundGravity="left|clip_horizontal|center"
             android:onClick="onClick" />
     </LinearLayout>
 

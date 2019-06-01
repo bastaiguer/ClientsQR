@@ -1,10 +1,14 @@
 package com.simarro.joshu.clientsqr.Resources.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.simarro.joshu.clientsqr.Pojo.Client;
@@ -15,6 +19,7 @@ import java.util.ArrayList;
 public class adapterListClients extends ArrayAdapter<Client> {
     private static class ViewHolder{
         TextView id, nom, tlf, punts;
+        ImageView perfil;
     }
 
     public adapterListClients(ArrayList<Client> data, Context context){
@@ -36,6 +41,7 @@ public class adapterListClients extends ArrayAdapter<Client> {
             viewHolder.nom = convertView.findViewById(R.id.txt_nom);
             viewHolder.tlf = convertView.findViewById(R.id.txt_telefono);
             viewHolder.punts = convertView.findViewById(R.id.txt_punts);
+            viewHolder.perfil = convertView.findViewById(R.id.foto_cliente);
             convertView.setTag(viewHolder);
             result = convertView;
         }else{
@@ -58,6 +64,18 @@ public class adapterListClients extends ArrayAdapter<Client> {
             viewHolder.punts.setTextColor(result.getResources().getColor(R.color.normal));
         }
 
+        if(!cl.getImagen().equals("")){
+            viewHolder.perfil.setImageBitmap(base64ToBitmap(cl.getImagen()));
+        }else{
+            viewHolder.perfil.setImageResource(R.drawable.user);
+        }
+
         return result;
     }
+
+    private Bitmap base64ToBitmap(String b64) {
+        byte[] imageAsBytes = Base64.decode(b64.getBytes(), Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+    }
+
 }

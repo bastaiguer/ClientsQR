@@ -215,8 +215,9 @@ public class BD implements Runnable {
             stmt2 = conexionMySQL.prepareCall("SELECT * FROM registre_premis");
             rs = stmt2.executeQuery();
             while (rs.next()) {
-                id++;
+                id = rs.getInt("id");
             }
+            id += 1;
             stmt.setInt(1, id);
             stmt.setInt(2, idPremio);
             stmt.setInt(3, idCliente);
@@ -430,13 +431,14 @@ public class BD implements Runnable {
     }
 
     protected void delCliente(int id) {
-        java.sql.PreparedStatement stmt = null;
-        java.sql.PreparedStatement stmt2;
+        java.sql.PreparedStatement stmt = null, stmt2, stmtdelpunts, stmtdelpunts2;
         this.result = 1;
         ResultSet rs;
         Client c = null;
         try {
             stmt = conexionMySQL.prepareCall("DELETE FROM clients WHERE id=?");
+            stmtdelpunts = conexionMySQL.prepareCall("DELETE FROM registre_punts WHERE idclient=?");
+            stmtdelpunts2 = conexionMySQL.prepareCall("DELETE FROM registre_premis WHERE client=?");
             stmt2 = conexionMySQL.prepareCall("SELECT * FROM clients WHERE id=?");
             stmt2.setInt(1, id);
             rs = stmt2.executeQuery();
@@ -447,6 +449,10 @@ public class BD implements Runnable {
                 this.result = 0;
                 stmt.setInt(1, id);
                 stmt.executeUpdate();
+                stmtdelpunts.setInt(1,id);
+                stmtdelpunts.executeUpdate();
+                stmtdelpunts2.setInt(1,id);
+                stmtdelpunts2.executeUpdate();
             } else {
                 System.out.println("No se ha encontrado el cliente...");
             }
