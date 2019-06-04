@@ -21,7 +21,7 @@ import com.simarro.joshu.clientsqr.BBDD.BD;
 import com.simarro.joshu.clientsqr.Pojo.Tenda;
 import com.simarro.joshu.clientsqr.R;
 
-public class add_client extends AppCompatActivity implements View.OnClickListener {
+public class AddClient extends AppCompatActivity implements View.OnClickListener {
 
     private String txt_nom, txt_mote, txt_tlf;
     private EditText nom, tlf;
@@ -48,7 +48,8 @@ public class add_client extends AppCompatActivity implements View.OnClickListene
         gps_ok = findViewById(R.id.img_gps_ok_add);
         registrar = findViewById(R.id.btn_registrar);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[] {
                                 Manifest.permission.ACCESS_FINE_LOCATION,
                                 Manifest.permission.ACCESS_COARSE_LOCATION },

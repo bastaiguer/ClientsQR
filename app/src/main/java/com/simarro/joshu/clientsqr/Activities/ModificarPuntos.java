@@ -26,7 +26,7 @@ import com.simarro.joshu.clientsqr.Pojo.Tenda;
 import com.simarro.joshu.clientsqr.R;
 import com.simarro.joshu.clientsqr.Resources.Dialogs.DialogoInfo;
 
-public class modificar_puntos extends AppCompatActivity implements View.OnClickListener {
+public class ModificarPuntos extends AppCompatActivity implements View.OnClickListener {
 
     private LlistaClients clients = new LlistaClients();
     private String qr;
@@ -204,7 +204,7 @@ public class modificar_puntos extends AppCompatActivity implements View.OnClickL
                         e.printStackTrace();
                     }
                     Client client = bd.getClientOb();
-                    Intent intent = new Intent(this,premios.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    Intent intent = new Intent(this, Premios.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra("tipo",false);
                     intent.putExtra("client",client);
                     startActivity(intent);

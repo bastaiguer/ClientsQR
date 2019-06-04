@@ -11,13 +11,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.simarro.joshu.clientsqr.Activities.panel_control;
+import com.simarro.joshu.clientsqr.Activities.PanelControl;
 import com.simarro.joshu.clientsqr.BBDD.BD;
 import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.R;
 import com.simarro.joshu.clientsqr.Resources.ListaClientesDialogsInterface;
-
-import org.greenrobot.eventbus.EventBus;
 
 public class DialogoOpcionesClient extends DialogFragment implements View.OnClickListener {
 
@@ -91,7 +89,7 @@ public class DialogoOpcionesClient extends DialogFragment implements View.OnClic
             DialogoUpdateClient dialegUpd = DialogoUpdateClient.newInstance(c,this.interfazComunicacion);
             dialegUpd.show(getFragmentManager(), "dialegUpdate");
         }else if(v.getId() == R.id.btn_panel_control){
-            Intent intent = new Intent(getContext(), panel_control.class);
+            Intent intent = new Intent(getContext(), PanelControl.class);
             intent.putExtra("client",c);
             startActivity(intent);
         }

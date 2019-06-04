@@ -27,7 +27,7 @@ import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.R;
 import com.simarro.joshu.clientsqr.Resources.MyFragmentPagerAdapter;
 
-public class panel_control extends FragmentActivity{
+public class PanelControl extends FragmentActivity{
 
     private ViewPager pager = null;
     private TabLayout tabsTitulos;

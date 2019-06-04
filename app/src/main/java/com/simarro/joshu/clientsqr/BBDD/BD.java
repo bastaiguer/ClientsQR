@@ -353,7 +353,7 @@ public class BD implements Runnable {
 
     }
 
-    protected void modCliente(int id, String nom, String mote, String tlf, int pts) {
+    protected void modCliente(int id, String nom, String tlf, int pts) {
         java.sql.PreparedStatement stmt = null;
         java.sql.PreparedStatement stmt2;
         this.result = 1;
@@ -370,7 +370,7 @@ public class BD implements Runnable {
             if (c != null) {
                 this.result = 0;
                 stmt.setString(1, nom);
-                stmt.setString(2, mote);
+                stmt.setString(2, "");
                 stmt.setString(3, tlf);
                 stmt.setInt(4, pts);
                 stmt.setInt(5, id);
@@ -482,7 +482,6 @@ public class BD implements Runnable {
                 client = new Client();
                 client.setId(rs.getInt("id"));
                 client.setNombre(rs.getString("nombre"));
-                client.setMote(rs.getString("mote"));
                 client.setTelefono(rs.getString("telefono"));
                 client.setPunts(rs.getInt("punts"));
                 client.setRegistro(rs.getTimestamp("registro"));
@@ -522,7 +521,6 @@ public class BD implements Runnable {
                 client = new Client();
                 client.setId(rs.getInt("id"));
                 client.setNombre(rs.getString("nombre"));
-                client.setMote(rs.getString("mote"));
                 client.setTelefono(rs.getString("telefono"));
                 client.setPunts(rs.getInt("punts"));
                 client.setRegistro(rs.getTimestamp("registro"));
@@ -530,7 +528,7 @@ public class BD implements Runnable {
                 client.setLatitud(rs.getDouble("latitud"));
                 client.setPass(rs.getString("pass"));
                 client.setImagen(rs.getString("imagen"));
-                client.setTienda(Integer.parseInt(rs.getString("tienda")));
+                client.setTienda(rs.getInt("tienda"));
                 this.clientOb = client;
             }
         } catch (SQLException e) {

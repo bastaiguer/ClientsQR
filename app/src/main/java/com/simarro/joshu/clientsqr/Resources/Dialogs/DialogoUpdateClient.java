@@ -2,7 +2,6 @@ package com.simarro.joshu.clientsqr.Resources.Dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,9 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.simarro.joshu.clientsqr.Activities.lista_clientes;
 import com.simarro.joshu.clientsqr.BBDD.BD;
 import com.simarro.joshu.clientsqr.Pojo.Client;
 import com.simarro.joshu.clientsqr.R;
@@ -72,7 +69,7 @@ public class DialogoUpdateClient extends DialogFragment implements View.OnClickL
                         synchronized (this) {
                             wait(500);
                             conectarBDMySQL();
-                            modCliente(c.getId(),c.getNombre(),c.getMote(),c.getTelefono(),c.getPunts());
+                            modCliente(c.getId(),c.getNombre(),c.getTelefono(),c.getPunts());
                             cerrarConexion();
                         }
                     } catch (InterruptedException e) {

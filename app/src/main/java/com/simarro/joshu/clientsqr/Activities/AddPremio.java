@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -25,7 +24,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-public class add_premio extends AppCompatActivity implements View.OnClickListener {
+public class AddPremio extends AppCompatActivity implements View.OnClickListener {
 
     private EditText titulo, descripcion, puntos;
     private Button btnAdd;
@@ -57,7 +56,7 @@ public class add_premio extends AppCompatActivity implements View.OnClickListene
         final Premi premi = new Premi();
         switch (v.getId()) {
             case R.id.btn_premio_add:
-                intent = new Intent(this, lista_clientes.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent = new Intent(this, ListaClientes.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 if (this.titulo.getText().toString().equals("") || this.descripcion.getText().toString().equals("") || this.puntos.getText().toString().equals("")) {
                     Toast.makeText(this, "Hay campos vacíos", Toast.LENGTH_SHORT).show();
                 } else {

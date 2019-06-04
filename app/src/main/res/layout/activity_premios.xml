@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo"
-    tools:context=".Activities.premios">
+    tools:context=".Activities.Premios">
 
     <ListView
         android:id="@+id/lista_premios"

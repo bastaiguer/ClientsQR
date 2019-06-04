@@ -3,26 +3,19 @@ package com.simarro.joshu.clientsqr.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.simarro.joshu.clientsqr.BBDD.BD;
-import com.simarro.joshu.clientsqr.Pojo.Client;
-import com.simarro.joshu.clientsqr.Pojo.LlistaClients;
 import com.simarro.joshu.clientsqr.Pojo.Tenda;
 import com.simarro.joshu.clientsqr.R;
-
-import java.util.ArrayList;
 
 public class DashBoard extends AppCompatActivity implements View.OnClickListener {
 
@@ -109,7 +102,7 @@ public class DashBoard extends AppCompatActivity implements View.OnClickListener
                 startActivity(intent);
                 break;
             case R.id.btn_clientes:
-                intent = new Intent(this,lista_clientes.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent = new Intent(this, ListaClientes.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("tenda",tenda);
                 startActivity(intent);
                 break;

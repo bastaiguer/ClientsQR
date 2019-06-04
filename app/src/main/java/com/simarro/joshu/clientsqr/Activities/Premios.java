@@ -24,10 +24,9 @@ import com.simarro.joshu.clientsqr.R;
 import com.simarro.joshu.clientsqr.Resources.Adapters.adapterListPremis;
 import com.simarro.joshu.clientsqr.Resources.Dialogs.DialogoInfo;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class premios extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
+public class Premios extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     private ListView listaPremios;
     private adapterListPremis adapter;
@@ -73,7 +72,7 @@ public class premios extends AppCompatActivity implements AdapterView.OnItemClic
                             longitud = location.getLongitude();
                             latitud = location.getLatitude();
                             if(!changed) {
-                                listaPremios.setOnItemClickListener(premios.this);
+                                listaPremios.setOnItemClickListener(Premios.this);
                                 changed = true;
                             }
                         }
@@ -179,7 +178,7 @@ public class premios extends AppCompatActivity implements AdapterView.OnItemClic
         Intent intent;
         switch(v.getId()){
             case R.id.btn_add_premio:
-                intent = new Intent(this,add_premio.class);
+                intent = new Intent(this, AddPremio.class);
                 intent.putExtra("tenda",this.tenda);
                 startActivity(intent);
                 break;

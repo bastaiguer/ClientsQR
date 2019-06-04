@@ -18,8 +18,8 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".Activities.Cupones"></activity>
         <activity android:name=".Activities.MiPerfil" />
-        <activity android:name=".Activities.add_premio" />
-        <activity android:name=".Activities.premios" />
+        <activity android:name=".Activities.AddPremio" />
+        <activity android:name=".Activities.Premios" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -28,7 +28,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCKMhXKlzKq3MA97TrqhNJznpmQjPbPB8A" />
 
-        <activity android:name=".Activities.panel_control" />
+        <activity android:name=".Activities.PanelControl" />
         <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,10 +37,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.DashBoard" />
-        <activity android:name=".Activities.lista_clientes" />
+        <activity android:name=".Activities.ListaClientes" />
         <activity android:name=".Activities.lector_qr" />
-        <activity android:name=".Activities.modificar_puntos" />
-        <activity android:name=".Activities.add_client" />
+        <activity android:name=".Activities.ModificarPuntos" />
+        <activity android:name=".Activities.AddClient" />
         <activity android:name=".Fragments.gestionarPreferencias" />
     </application>
 

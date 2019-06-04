@@ -87,35 +87,19 @@ public class lector_qr extends AppCompatActivity {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() > 0) {
                     token = barcodes.valueAt(0).displayValue.toString();
-                    // verificamos que el token anterior no se igual al actual
-                    // esto es util para evitar multiples llamadas empleando el mismo token
                     if (!token.equals(tokenanterior)) {
-                        // guardamos el ultimo token procesado
                         tokenanterior = token;
-                        Log.i("token", token);
-                        /*if (URLUtil.isValidUrl(token)) {
-                            // si es una URL valida abre el navegador
-                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(token));
-                            startActivity(browserIntent);
-                        } else {
-                            // comparte en otras apps
-                            Intent shareIntent = new Intent();
-                            shareIntent.setAction(Intent.ACTION_SEND);
-                            shareIntent.putExtra(Intent.EXTRA_TEXT, token);
-                            shareIntent.setType("text/plain");
-                            startActivity(shareIntent);
-                        }*/
                         Intent intent = new Intent();
                         Toast.makeText(getApplicationContext(),token,Toast.LENGTH_SHORT).show();
                         Tenda tenda2;
                         if (op == 0) {
-                            intent.setClass(lector_qr.this.getApplicationContext(), modificar_puntos.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.setClass(lector_qr.this.getApplicationContext(), ModificarPuntos.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             intent.putExtra("qr", token);
                             tenda2 = (Tenda) getIntent().getExtras().getSerializable("tenda");
                             intent.putExtra("tenda",tenda2);
                             startActivity(intent);
                         } else if (op == 1) {
-                            intent.setClass(lector_qr.this.getApplicationContext(), add_client.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.setClass(lector_qr.this.getApplicationContext(), AddClient.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             intent.putExtra("qr", token);
                             tenda2 = (Tenda) getIntent().getExtras().getSerializable("tenda");
                             intent.putExtra("tenda",tenda2);

@@ -6,28 +6,21 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Base64;
 import android.util.Log;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.simarro.joshu.clientsqr.BBDD.BD;
 import com.simarro.joshu.clientsqr.Pojo.Client;
-import com.simarro.joshu.clientsqr.Pojo.Punts;
 import com.simarro.joshu.clientsqr.R;
 import com.simarro.joshu.clientsqr.Resources.Dialogs.DialogoCambioPass;
 import com.simarro.joshu.clientsqr.Resources.Dialogs.DialogoFotoPerfil;
@@ -38,7 +31,6 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
 
 public class MiPerfil extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
 
@@ -175,7 +167,7 @@ public class MiPerfil extends AppCompatActivity implements View.OnClickListener,
                     dialeg.show(getSupportFragmentManager(),"DialogoCambioPass");
                     break;
                 case R.id.btn_premios_perfil:
-                    intent = new Intent(this,premios.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent = new Intent(this, Premios.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra("client",this.client);
                     intent.putExtra("tipo",false);
                     startActivity(intent);

@@ -1,6 +1,5 @@
 package com.simarro.joshu.clientsqr.Activities;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class lista_clientes extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, ListaClientesDialogsInterface {
+public class ListaClientes extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, ListaClientesDialogsInterface {
 
     private LlistaClients clients = new LlistaClients();
     private ArrayList<Client> edited = new ArrayList<>();
@@ -59,7 +58,7 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
                 ordenarPorPuntos();
                 break;
             case R.id.premios:
-                Intent intent = new Intent(this,premios.class);
+                Intent intent = new Intent(this, Premios.class);
                 intent.putExtra("tenda",this.tenda);
                 intent.putExtra("tipo",true);
                 startActivity(intent);
@@ -118,7 +117,7 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
             @Override
             public boolean onQueryTextSubmit(String query) {
                 LlistaClients llistaBusqueda = new LlistaClients();
-                for (Client c : clients) {
+                for (Client c : edited) {
                     if (c.getNombre().contains(query) || c.getTelefono().contains(query)) {
                         llistaBusqueda.add(c);
                     }
@@ -132,7 +131,7 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
             @Override
             public boolean onQueryTextChange(String newText) {
                 LlistaClients llistaBusqueda = new LlistaClients();
-                for (Client c : clients) {
+                for (Client c : edited) {
                     if (c.getNombre().contains(newText) || c.getTelefono().contains(newText)) {
                         llistaBusqueda.add(c);
                     }
@@ -156,7 +155,7 @@ public class lista_clientes extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        final lista_clientes act = this;
+        final ListaClientes act = this;
         dialeg2 = DialogoOpcionesClient.newInstance(edited.get(position), act);
         dialeg2.show(getSupportFragmentManager(), "dialegModDel");
         return false;

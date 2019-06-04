@@ -15,16 +15,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.simarro.joshu.clientsqr.Activities.DashBoard;
 import com.simarro.joshu.clientsqr.Activities.MiPerfil;
 import com.simarro.joshu.clientsqr.Activities.lector_qr;
-import com.simarro.joshu.clientsqr.Activities.premios;
 import com.simarro.joshu.clientsqr.BBDD.BD;
 import com.simarro.joshu.clientsqr.Pojo.Client;
-import com.simarro.joshu.clientsqr.Pojo.Premi;
 import com.simarro.joshu.clientsqr.Pojo.Tenda;
 import com.simarro.joshu.clientsqr.R;
 
